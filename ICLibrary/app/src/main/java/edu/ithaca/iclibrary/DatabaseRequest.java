@@ -71,7 +71,7 @@ public class DatabaseRequest extends AsyncTask<URL, String, String> {
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         }
-        //System.out.print(responseString);
+        System.out.print("does THIS run");
         return null;
     }
 }

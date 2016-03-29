@@ -13,6 +13,8 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
+    DatabaseRequest req;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //FIXME: this crashes the app. why????????
         //one person who had a problem on stack overflow initialized the task as a data member
-        DatabaseRequest req = new DatabaseRequest();
+        req = new DatabaseRequest();
         req.execute(new URL[0]);
     }
 
