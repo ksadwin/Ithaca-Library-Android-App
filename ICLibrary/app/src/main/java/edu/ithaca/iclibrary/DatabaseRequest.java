@@ -1,6 +1,7 @@
 package edu.ithaca.iclibrary;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -20,7 +21,8 @@ import javax.net.ssl.HttpsURLConnection;
  * @exception IOException, XmlPullParserException
  * 3/27/2016
  */
-public class DatabaseRequest extends AsyncTask<URL, String, String> {
+public class DatabaseRequest extends AsyncTask<URL, Void, Material[]> {
+    private static final String TAG = "DatabaseRequest";
 
     /**
      * Found at http://stackoverflow.com/questions/309424/read-convert-an-inputstream-to-a-string
@@ -34,11 +36,11 @@ public class DatabaseRequest extends AsyncTask<URL, String, String> {
 
     /**
      * Make API request to Ithaca Library and parse XML response.
+     * FIXME: Crashes when inserted in MainActivity onCreate method, therefore cannot be run. The world is a cruel place.
      * @param params: eventually that will contain the URLs to load but presently it does not
-     * @return parsed XML response. In what format? Why do you ask such hard questions?
+     * @return list of Material objects created from XML specs
      */
-    protected String doInBackground(URL[] params) {
-        String responseString = null;
+    protected Material[] doInBackground(URL[] params) {
         try {
             URL url = new URL("http://phoebe.ithaca.edu:7014/vxws/SearchService?searchCode=NKEY&maxResultsPerPage=25&recCount=25&searchArg=dickens");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -64,14 +66,13 @@ public class DatabaseRequest extends AsyncTask<URL, String, String> {
                 }
             }
             else {
-                responseString = "FAILED"; // See documentation for more info on response handling
+                Log.e(TAG, "HTTP Response code: "+conn.getResponseCode());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.toString());
         } catch (XmlPullParserException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.toString());
         }
-        System.out.print("does THIS run");
         return null;
     }
 }
