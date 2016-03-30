@@ -11,11 +11,11 @@
     tools:context="edu.ithaca.iclibrary.MainActivity">
 
     <Button
+        android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search"
-        android:id="@+id/search_button"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Search" />
 </RelativeLayout>
