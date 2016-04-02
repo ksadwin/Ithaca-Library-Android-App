@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main_layout);
 
-        //Creates searchbar dynamically. must be final to access text in event listener?
+        //Creates searchbar dynamically. IT'S ALREADY THERE FIX THIS
         final EditText searchBar = new EditText(this);
 
         //Hint text will disappear when the user begins typing. You're welcome. -ksadwin
