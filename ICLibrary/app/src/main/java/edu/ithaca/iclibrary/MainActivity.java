@@ -5,14 +5,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
-
+    String TAG = "MainActivity";
     DatabaseRequest req;
 
     @Override
@@ -28,12 +30,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                req = new DatabaseRequest();
+                try {
+                    req.execute(new URL("http://phoebe.ithaca.edu:7014/vxws/SearchService?searchCode=NKEY&maxResultsPerPage=25&recCount=25&searchArg=dickens"));
+
+                } catch (MalformedURLException e) {
+                    Log.e(TAG, e.toString());
+                }
             }
         });
-        //FIXME: this crashes the app. why????????
-        //one person who had a problem on stack overflow initialized the task as a data member
-        req = new DatabaseRequest();
-        req.execute(new URL[0]);
+
     }
 
     @Override
