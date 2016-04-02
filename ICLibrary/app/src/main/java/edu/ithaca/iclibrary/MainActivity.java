@@ -47,23 +47,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //get search bar from XML & make it final so that event listener can access text
+        final EditText searchBar = (EditText) findViewById(R.id.editQuery);
 
-        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main_layout);
-
-        //Creates searchbar dynamically. IT'S ALREADY THERE FIX THIS
-        final EditText searchBar = new EditText(this);
-
-        //Hint text will disappear when the user begins typing. You're welcome. -ksadwin
-        searchBar.setHint("Enter your search here.");
-
-        RelativeLayout.LayoutParams rightOf = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        rightOf.addRule(RelativeLayout.RIGHT_OF, R.id.search_button);
-        searchBar.setLayoutParams(rightOf);
-        mainLayout.addView(searchBar);
-
-        //adding functionality to search button -ksadwin
+        //adding functionality to search button
         Button searchButton = (Button) findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
