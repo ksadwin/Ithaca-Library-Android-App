@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ICLibrary</string>
+
+    <string-array name="search_types">
+        <item>Author</item>
+        <item>Subject</item>
+        <item>Title</item>
+    </string-array>
+
 </resources>

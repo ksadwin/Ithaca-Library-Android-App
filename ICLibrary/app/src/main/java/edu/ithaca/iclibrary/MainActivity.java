@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.net.MalformedURLException;
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText searchBar = (EditText) findViewById(R.id.editQuery);
 
         //adding functionality to search button
-        Button searchButton = (Button) findViewById(R.id.search_button);
+        Button searchButton = (Button) findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Log.v(TAG, "query: "+searchBar.getText().toString());
@@ -63,5 +65,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Spinner spin = spinnerLoader(R.id.searchType);
+
+    }
+
+    public Spinner spinnerLoader(int id) {
+        Spinner searchType = (Spinner)findViewById(R.id.searchType);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.search_types, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        searchType.setAdapter(adapter);
+        return searchType;
     }
 }
