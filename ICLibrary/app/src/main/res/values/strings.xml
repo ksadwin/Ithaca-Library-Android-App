@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">ICLibrary</string>
+    <string name="SearchBarText">Enter search here</string>
 
     <string-array name="search_types">
         <item>Author</item>
+        <item>ISBN</item>
         <item>Subject</item>
         <item>Title</item>
     </string-array>
