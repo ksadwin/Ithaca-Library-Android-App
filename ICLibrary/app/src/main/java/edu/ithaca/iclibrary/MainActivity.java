@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 //Create and display the search result activity.
                 // Displays nothing for the moment.
                 makeResultsActivity();
+
             }
         });
     }
