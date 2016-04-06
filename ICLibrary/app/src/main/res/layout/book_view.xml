@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:longClickable="false"
+    android:minHeight="80dp"
+    android:minWidth="80dp">
+
+    <ImageView
+        android:id="@+id/bookCover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:maxHeight="80dp"
+        android:maxWidth="80dp"
+        android:src="@drawable/hp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/checkBox" />
+
+    <TextView
+        android:id="@+id/booktxt_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="52dp"
+        android:layout_marginStart="52dp"
+        android:layout_toEndOf="@+id/bookCover"
+        android:layout_toRightOf="@+id/bookCover"
+        android:text="Book Title shown here"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/booktxt_Status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/booktxt_Author"
+        android:layout_alignStart="@+id/booktxt_Author"
+        android:layout_below="@+id/booktxt_Author"
+        android:text="status shown here"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/booktxt_Author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/booktxt_Title"
+        android:layout_alignStart="@+id/booktxt_Title"
+        android:layout_below="@+id/booktxt_Title"
+        android:text="Author shown here"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Favorite"
+        android:id="@+id/checkBox"
+        android:checked="false"
+        android:layout_below="@+id/booktxt_Status"
+        android:layout_alignLeft="@+id/booktxt_Status"
+        android:layout_alignStart="@+id/booktxt_Status" />
+
+</RelativeLayout>
