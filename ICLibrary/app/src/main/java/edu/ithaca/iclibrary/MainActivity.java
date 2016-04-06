@@ -1,5 +1,6 @@
 package edu.ithaca.iclibrary;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -80,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
                 } catch (MalformedURLException e) {
                     Log.e(TAG, e.toString());
                 }
+
+                //Create and display the search result activity.
+                // Displays nothing for the moment.
+                makeResultsActivity();
             }
         });
     }
@@ -97,5 +102,15 @@ public class MainActivity extends AppCompatActivity {
         searchType.setAdapter(adapter);
 
         return searchType;
+    }
+
+    /**
+     * Creates and transitions to the Results View Activity from MainActivity.
+     */
+    public void makeResultsActivity() {
+        //Create and display the search result activity.
+        // Displays nothing for the moment.
+        Intent results = new Intent(this, ResultActivity.class);
+        startActivity(results);
     }
 }
