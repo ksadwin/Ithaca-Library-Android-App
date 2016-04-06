@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Sets view with activity_main XML file.
-     * Adds event listener to Search button to make API call.
+     * Creates an EditText searchbar dynamically with
+     * Java.
      * @param savedInstanceState
      */
     @Override
@@ -51,24 +52,36 @@ public class MainActivity extends AppCompatActivity {
         //get search bar from XML & make it final so that event listener can access text
         final EditText searchBar = (EditText) findViewById(R.id.editQuery);
 
-        //adding functionality to search button
+        final Spinner searchType = spinnerLoader(R.id.searchType);
+
+        //adding functionality to search button & spinner
         Button searchButton = (Button) findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Log.v(TAG, "query: "+searchBar.getText().toString());
+                //Log.v(TAG, "query: "+searchBar.getText().toString()+"\ntype: "+searchType.getSelectedItem().toString());
+                String queryType = "";
+                if (searchType.getSelectedItem().toString().equals("Title")) {
+                    queryType = "TALL";
+                } else if (searchType.getSelectedItem().toString().equals("Author")) {
+                    queryType = "NKEY";
+                } else if (searchType.getSelectedItem().toString().equals("ISBN")) {
+                    queryType = "isbn";
+                } else if (searchType.getSelectedItem().toString().equals("Subject")) {
+                    queryType = "SKEY";
+                } else {
+                    //This query type is called "key" in Mariah's code. Not sure what it means
+                    queryType = "GKEY";
+                }
                 DatabaseRequest req = new DatabaseRequest();
                 try {
-                    req.execute(makeURL("NKEY", searchBar.getText().toString()));
+                    //TODO: format query string for URI
+                    //only the first word of the query is actually searched, but that's something.
+                    req.execute(makeURL(queryType, searchBar.getText().toString()));
                 } catch (MalformedURLException e) {
                     Log.e(TAG, e.toString());
                 }
             }
         });
-
-        Spinner searchType = spinnerLoader(R.id.searchType);
-
-        System.out.println(searchType.getItemAtPosition(0));
-
     }
 
     public Spinner spinnerLoader(int id) {
