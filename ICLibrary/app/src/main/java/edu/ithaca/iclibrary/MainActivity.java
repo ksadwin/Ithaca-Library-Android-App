@@ -40,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Sets view with activity_main XML file.
-     * Creates an EditText searchbar dynamically with
-     * Java.
+     * Adds event listener to Search button to make API call.
      * @param savedInstanceState
      */
     @Override
