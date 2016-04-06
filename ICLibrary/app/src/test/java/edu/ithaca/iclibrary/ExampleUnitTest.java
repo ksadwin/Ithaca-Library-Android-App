@@ -39,11 +39,17 @@ public class ExampleUnitTest {
     }
 
     @Test
+    public void spinnerLoaderCreatesSpinner() throws Exception {
+        Spinner spin = sampleMain.spinnerLoader(R.id.searchType);
+        assertNotNull(spin);
+    }
+
+    @Test
     public void spinnerHasCorrectSearchTypesEnabled() throws Exception {
 
-    //        assertEquals("Author", sampleMain.spinnerLoader(R.id.searchType).getItemAtPosition(0));
-    //        assertEquals("ISBN",sampleMain.spinnerLoader(R.id.searchType).getItemAtPosition(1));
-    //        assertEquals("Subject",sampleMain.spinnerLoader(R.id.searchType).getItemAtPosition(2));
-    //        assertEquals("Title",sampleMain.spinnerLoader(R.id.searchType).getItemAtPosition(3));
+//            assertEquals("Author", sampleMain.spinnerLoader(R.id.searchType).getItemAtPosition(0));
+//            assertEquals("ISBN",sampleMain.spinnerLoader(R.id.searchType).getItemAtPosition(1));
+//            assertEquals("Subject",sampleMain.spinnerLoader(R.id.searchType).getItemAtPosition(2));
+//            assertEquals("Title",sampleMain.spinnerLoader(R.id.searchType).getItemAtPosition(3));
     }
 }

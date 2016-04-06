@@ -68,10 +68,14 @@ public class MainActivity extends AppCompatActivity {
 
         Spinner searchType = spinnerLoader(R.id.searchType);
 
+        System.out.println(searchType.getItemAtPosition(0));
+
     }
 
     public Spinner spinnerLoader(int id) {
         Spinner searchType = (Spinner)findViewById(R.id.searchType);
+
+        System.out.println("Hey, sup.");
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.search_types, android.R.layout.simple_spinner_item);
