@@ -92,8 +92,6 @@ public class MainActivity extends AppCompatActivity {
     public Spinner spinnerLoader(int id) {
         Spinner searchType = (Spinner)findViewById(R.id.searchType);
 
-        System.out.println("Hey, sup.");
-
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.search_types, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -110,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     public void makeResultsActivity() {
         //Create and display the search result activity.
         // Displays nothing for the moment.
-        Intent results = new Intent(this, ResultActivity.class);
+        Intent results = new Intent(this, ScrollingActivity.class);
         startActivity(results);
     }
 }
