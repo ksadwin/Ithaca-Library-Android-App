@@ -18,8 +18,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ResultActivity"
-            android:label="@string/title_activity_result"
+            android:name=".ScrollingActivity"
+            android:label="Search Results"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

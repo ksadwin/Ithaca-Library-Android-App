@@ -35,7 +35,8 @@ public class ScrollingActivity extends AppCompatActivity {
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ScrollingActivity.this, "Current Search Results have been \"Saved\"!!", Toast.LENGTH_LONG);
+                Toast.makeText(ScrollingActivity.this, "Current Search Results have been \"Saved\"!!",
+                        Toast.LENGTH_LONG).show();
             }
         });
 
