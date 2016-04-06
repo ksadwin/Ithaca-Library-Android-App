@@ -78,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
                     //TODO: format query string for URI
                     //only the first word of the query is actually searched, but that's something.
                     req.execute(makeURL(queryType, searchBar.getText().toString()));
+                    for (Material m : req.results) {
+                        Log.v(TAG, m.toString());
+                    }
                 } catch (MalformedURLException e) {
                     Log.e(TAG, e.toString());
                 }

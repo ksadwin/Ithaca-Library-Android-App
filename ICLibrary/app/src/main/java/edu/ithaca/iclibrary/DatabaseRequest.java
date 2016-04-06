@@ -24,6 +24,7 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public class DatabaseRequest extends AsyncTask<URL, Void, Material[]> {
     private static final String TAG = "DatabaseRequest";
+    public Material[] results;
 
     /**
      * Converts InputStream to String.
@@ -150,9 +151,7 @@ public class DatabaseRequest extends AsyncTask<URL, Void, Material[]> {
     }
 
     protected void onPostExecute (Material[] materials) {
-        for (Material m : materials) {
-            Log.v(TAG, m.toString());
-        }
+        this.results = materials;
     }
 
 }
