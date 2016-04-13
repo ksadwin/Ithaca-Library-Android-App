@@ -1,0 +1,92 @@
+**SEARCH BUTTON APPEARS AT ONCREATE**
+
+Desirable:
+A Button object should appear when the user first opens the app.
+
+Procedure:
+1.	Open an Android device/ emulator.
+2.	If the app does not appear automatically (as in using a physical Android device), navigate to the ICLibrary app in the launcher screen.
+3.	Tap the ICLibrary app launch icon.
+
+Result:
+A MainActivity will appear with a Button object in the upper left-hand corner of the MainActivity’s Layout. The Button’s label should read “Search.”
+
+********************************************************************************************************************************************************************** 
+
+**TYPABLE TEXTVIEW APPEAR AT ONCREATE**
+
+Desirable:
+A text box for users to enter search queries should appear in the MainActivity.
+
+Procedure:
+1.	Open an Android device/ emulator.
+2.	If the app does not appear automatically (as in using a physical Android device), navigate to the ICLibrary app in the launcher screen.
+3.	Tap the ICLibrary app launch icon.
+
+Result:
+A MainActivity will appear with an EditText object in the upper left-hand corner of the MainActivity’s Layout.
+The EditText should be snapped to the right of the Search Button.
+
+**********************************************************************************************************************************************************************
+ 
+**TEXTVIEW READS "ENTER SEARCH HERE"**
+
+Desirable:
+The app’s main search bar will contain text that reads, “Enter search query here”. Text will disappear when user clicks into it.
+
+Procedure:
+1.	Open an Android device/ emulator.
+2.	If the app does not appear automatically (as in using a physical Android device), navigate to the ICLibrary app in the launcher screen.
+3.	Tap the ICLibrary app launch icon.
+4.	Tap the search bar to begin typing.
+
+Result:
+An EditText with a pre-defined string should appear. The pre-defined string should disappear whenever the user types into the EditText.
+ 
+**********************************************************************************************************************************************************************
+
+**SEARCHTYPE SPINNER DISPLAYS SEARCH OPTIONS ON CLICK**
+
+Desirable:
+The app should display a dropdown menu that allows the user to set their type of search by the library’s predefined categories.
+
+Procedure:
+1.	Open ICLibrary app from launcher screen.
+2.	Tap dropdown arrow (inverted triangle) on the right side of Spinner that reads, “Author.”
+3.	Select any item from the dropdown menu by tapping the desired item.
+
+Result:
+Value in Spinner is changed to value selected by tap.
+NOTE: Unit Tests will still be required to test if the selected values are successfully translated into the back-end search query.
+This merely tests that the interface element is working.
+
+**********************************************************************************************************************************************************************
+
+**MAINACTIVITY TRANSITIONS TO RESULTSACTIVITY WHEN SEARCHBUTTON IS CLICKED**
+
+Desirable:
+The app should display a new Activity (ResultsActivity) whenever Search is pressed and a query has been entered.
+
+Procedure:
+1.	Open ICLibrary app from launcher screen.
+2.	Tap the search bar to bring up the Android keyboard.
+3.	Type an arbitrary search query (Ex: "dickens").
+4.	Press back button to exit the keyboard.
+5.	Press "Search" to bottom-left of search bar.
+
+Result:
+The app loads a new Activity (ResultsActivity) onto the screen.
+
+**********************************************************************************************************************************************************************
+
+**BACK BUTTON FROM RESULTSACTIVITY BRINGS USER TO MAINACTIVITY**
+
+Desirable:
+The hierarchical parent of ResultsActivity should be MainActivity, allowing the user to step back through the app to MainActivity with Android's back button.
+
+Procedure:
+1.	Complete **MAINACTIVITY TRANSITIONS TO RESULTSACTIVITY WHEN SEARCHBUTTON IS CLICKED** test.
+2.	Click the recursive arrow (back) icon in the lower left of Android device's screen.
+
+Result:
+The app will reload MainActivity onto the screen.

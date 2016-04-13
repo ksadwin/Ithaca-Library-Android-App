@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * The Activity responsible for collecting user search
@@ -74,20 +76,25 @@ public class MainActivity extends AppCompatActivity {
                     queryType = "GKEY";
                 }
                 DatabaseRequest req = new DatabaseRequest();
+                ArrayList<Material> ms = new ArrayList<Material>();
                 try {
                     //TODO: format query string for URI
                     //only the first word of the query is actually searched, but that's something.
-                    req.execute(makeURL(queryType, searchBar.getText().toString()));
-                    for (Material m : req.results) {
+                    ms = req.execute(makeURL(queryType, searchBar.getText().toString())).get();
+                    for (Material m : ms) {
                         Log.v(TAG, m.toString());
                     }
                 } catch (MalformedURLException e) {
+                    Log.e(TAG, e.toString());
+                } catch (InterruptedException e) {
+                    Log.e(TAG, e.toString());
+                } catch (ExecutionException e) {
                     Log.e(TAG, e.toString());
                 }
 
                 //Create and display the search result activity.
                 // Displays nothing for the moment.
-                makeResultsActivity();
+                makeResultsActivity(ms);
             }
         });
     }
@@ -108,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Creates and transitions to the Results View Activity from MainActivity.
      */
-    public void makeResultsActivity() {
+    public void makeResultsActivity(ArrayList<Material> res) {
         //Create and display the search result activity.
         // Displays nothing for the moment.
         Intent results = new Intent(this, ScrollingActivity.class);
