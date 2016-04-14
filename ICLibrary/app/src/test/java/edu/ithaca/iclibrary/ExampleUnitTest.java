@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Spinner;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +31,25 @@ public class ExampleUnitTest {
     @Test
     public void mainActivityBuildsSuccessfully() throws Exception {
         assertNotNull(sampleMain);
-        System.out.println("MainActivity built successfully.");
+    }
+
+    @Test
+    public void spinnerLoadedAtOnCreate() throws Exception {
+        assertSame((Spinner) sampleMain.findViewById(R.id.searchType), sampleMain.spinnerLoader(R.id.searchType));
+    }
+
+    @Test
+    public void spinnerLoaderCreatesSpinner() throws Exception {
+        Spinner spin = sampleMain.spinnerLoader(R.id.searchType);
+        assertNotNull(spin);
+    }
+
+    @Test
+    public void spinnerHasCorrectSearchTypesEnabled() throws Exception {
+
+//            assertEquals("Author", sampleMain.spinnerLoader(R.id.searchType).getItemAtPosition(0));
+//            assertEquals("ISBN",sampleMain.spinnerLoader(R.id.searchType).getItemAtPosition(1));
+//            assertEquals("Subject",sampleMain.spinnerLoader(R.id.searchType).getItemAtPosition(2));
+//            assertEquals("Title",sampleMain.spinnerLoader(R.id.searchType).getItemAtPosition(3));
     }
 }

@@ -17,18 +17,29 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/editQuery"
         android:text="Search" />
 
     <EditText
         android:id="@+id/editQuery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/searchButton"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/searchButton"
-        android:hint="Enter search here" />
+        android:hint="@string/SearchBarText" />
+
+    <Spinner
+        android:id="@+id/searchType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/editQuery"
+        android:layout_toRightOf="@id/searchButton" />
 
 
 </RelativeLayout>

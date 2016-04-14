@@ -1,18 +1,23 @@
 package edu.ithaca.iclibrary;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * The Activity responsible for collecting user search
@@ -38,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Sets view with activity_main XML file.
-     * Adds event listener to Search button to make API call.
+     * Creates an EditText searchbar dynamically with
+     * Java.
      * @param savedInstanceState
      */
     @Override
@@ -49,18 +55,70 @@ public class MainActivity extends AppCompatActivity {
         //get search bar from XML & make it final so that event listener can access text
         final EditText searchBar = (EditText) findViewById(R.id.editQuery);
 
-        //adding functionality to search button
-        Button searchButton = (Button) findViewById(R.id.search_button);
+        final Spinner searchType = spinnerLoader(R.id.searchType);
+
+        //adding functionality to search button & spinner
+        Button searchButton = (Button) findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Log.v(TAG, "query: "+searchBar.getText().toString());
+                //Log.v(TAG, "query: "+searchBar.getText().toString()+"\ntype: "+searchType.getSelectedItem().toString());
+                String queryType = "";
+                if (searchType.getSelectedItem().toString().equals("Title")) {
+                    queryType = "TALL";
+                } else if (searchType.getSelectedItem().toString().equals("Author")) {
+                    queryType = "NKEY";
+                } else if (searchType.getSelectedItem().toString().equals("ISBN")) {
+                    queryType = "isbn";
+                } else if (searchType.getSelectedItem().toString().equals("Subject")) {
+                    queryType = "SKEY";
+                } else {
+                    //This query type is called "key" in Mariah's code. Not sure what it means
+                    queryType = "GKEY";
+                }
                 DatabaseRequest req = new DatabaseRequest();
+                ArrayList<Material> ms = new ArrayList<Material>();
                 try {
-                    req.execute(makeURL("NKEY", searchBar.getText().toString()));
+                    //TODO: format query string for URI
+                    //only the first word of the query is actually searched, but that's something.
+                    ms = req.execute(makeURL(queryType, searchBar.getText().toString())).get();
+                    for (Material m : ms) {
+                        Log.v(TAG, m.toString());
+                    }
                 } catch (MalformedURLException e) {
                     Log.e(TAG, e.toString());
+                } catch (InterruptedException e) {
+                    Log.e(TAG, e.toString());
+                } catch (ExecutionException e) {
+                    Log.e(TAG, e.toString());
                 }
+
+                //Create and display the search result activity.
+                // Displays nothing for the moment.
+                makeResultsActivity(ms);
             }
         });
+    }
+
+    public Spinner spinnerLoader(int id) {
+        Spinner searchType = (Spinner)findViewById(R.id.searchType);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.search_types, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        searchType.setAdapter(adapter);
+
+        return searchType;
+    }
+
+    /**
+     * Creates and transitions to the Results View Activity from MainActivity.
+     */
+    public void makeResultsActivity(ArrayList<Material> res) {
+        //Create and display the search result activity.
+        // Displays nothing for the moment.
+        Intent results = new Intent(this, ScrollingActivity.class);
+        startActivity(results);
     }
 }

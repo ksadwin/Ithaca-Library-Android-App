@@ -22,8 +22,9 @@ import javax.net.ssl.HttpsURLConnection;
  * @author KSADWIN
  * 3/27/2016
  */
-public class DatabaseRequest extends AsyncTask<URL, Void, Material[]> {
+public class DatabaseRequest extends AsyncTask<URL, Void, ArrayList<Material>> {
     private static final String TAG = "DatabaseRequest";
+    public Material[] results;
 
     /**
      * Converts InputStream to String.
@@ -36,13 +37,6 @@ public class DatabaseRequest extends AsyncTask<URL, Void, Material[]> {
         return s.hasNext() ? s.next() : "";
     }
 
-    /**
-     * Gets the text inside of an XML tag returned by the library.
-     * @param parser XmlPullParser currently in use
-     * @return either String text inside tag or null if no text found
-     * @throws XmlPullParserException
-     * @throws IOException
-     */
     public static String getText(XmlPullParser parser) throws XmlPullParserException, IOException {
         if (parser.next() == XmlPullParser.TEXT) {
             return parser.getText();
@@ -50,19 +44,10 @@ public class DatabaseRequest extends AsyncTask<URL, Void, Material[]> {
         return null;
     }
 
-    /**
-     * Constructs one Material object from a "sear:result" block of XML.
-     * @param parser XmlPullParser currently in use
-     * @return Material object with parameters defined by current XML block
-     * @throws XmlPullParserException
-     * @throws IOException
-     */
     public static Material readMaterial(XmlPullParser parser) throws XmlPullParserException, IOException {
         Material m = new Material();
         int eventType = parser.getEventType();
-        //parse XML only until the end result tag is found, i.e. that material's definition is over
         while (!(eventType == XmlPullParser.END_TAG && parser.getName().equals("sear:result"))) {
-            //find start tags for relevant parameters of material object
             if (eventType == XmlPullParser.START_TAG) {
                 if (parser.getName().equals("sear:bibId")) {
                     m.setBibId(getText(parser));
@@ -105,9 +90,8 @@ public class DatabaseRequest extends AsyncTask<URL, Void, Material[]> {
     }
 
     /**
-     * Parses XML from library to generate a list of Material objects.
-     * @param in InputStream (from an HTTP request in getMaterialsFromLibrary())
-     * @return List<Material>
+     * Parses XML in InputStream (from doInBackground).
+     * @param in
      * @throws XmlPullParserException
      * @throws IOException
      */
@@ -119,7 +103,6 @@ public class DatabaseRequest extends AsyncTask<URL, Void, Material[]> {
         int eventType = parser.getEventType();
         while (eventType != XmlPullParser.END_DOCUMENT) {
             if(eventType == XmlPullParser.START_TAG) {
-                //"sear:result" tag indicates a new result beginning. parse the XML within
                 if (parser.getName().equals("sear:result")) {
                     books.add(readMaterial(parser));
                 }
@@ -129,11 +112,6 @@ public class DatabaseRequest extends AsyncTask<URL, Void, Material[]> {
         return books;
     }
 
-    /**
-     * Makes HTTP request to library using the passed URL and returns resultant list of Materials.
-     * @param url URL object formatted for appropriate library API call
-     * @return List<Material> (may be empty, if no results found/bad HTTP request)
-     */
     public static List<Material> getMaterialsFromLibrary(URL url) {
         HttpURLConnection conn = null;
         try {
@@ -160,28 +138,20 @@ public class DatabaseRequest extends AsyncTask<URL, Void, Material[]> {
     }
 
     /**
-     * Called via .execute() in main UI thread to start the whole chain.
-     * Sends URLs to getMaterialsFromLibrary() and returns resultant Materials as an ARRAY
-     * @param params one or more URL objects (library API calls)
-     * @return array of Material objects created from XML found at URL(s)
+     * Make API request to Ithaca Library and parse XML response.
+     * @param params: eventually that will contain the URLs to load but presently it does not
+     * @return array of Material objects created from XML found at URL
      */
-    protected Material[] doInBackground(URL... params) {
-        List<Material> books = new ArrayList<>();
+    protected ArrayList<Material> doInBackground(URL... params) {
+        ArrayList<Material> books = new ArrayList<>();
         for (URL u : params) {
             books.addAll(getMaterialsFromLibrary(u));
         }
-        return books.toArray(new Material[books.size()]);
+        return books;
     }
 
-    /**
-     * Automatically occurs after the .execute() call in the main UI thread.
-     * Currently, prints Material objects to log. Ultimate goal: send to ResultViewActivity.
-     * @param materials automatically passed from results of doInBackground()
-     */
     protected void onPostExecute (Material[] materials) {
-        for (Material m : materials) {
-            Log.v(TAG, m.toString());
-        }
+        this.results = materials;
     }
 
 }
