@@ -1,0 +1,70 @@
+
+**RESULTSACTIVITY IS OPENDED WHEN SEARCHBUTTON IS CLICKED IN MAIN ACTIVITY **
+
+Desirable:
+The app should display a new Activity (ResultsActivity) with found books in a list view that are clickable. 
+
+Procedure:
+1.	Tap the search button on the Main Activity Page.
+
+Result:
+The app loads a Results Activity page with a list of found books that are clickable for detailed results.
+
+**********************************************************************************************************************************************************************
+
+**BACK BUTTON FROM RESULTSACTIVITY BRINGS USER TO MAINACTIVITY**
+
+Desirable:
+The hierarchical parent of ResultsActivity should be MainActivity, allowing the user to step back through the app to MainActivity with Android's back button.
+
+Procedure:
+1.	Click the recursive arrow (back) icon in the lower left of Android device's screen.
+
+Result:
+The app will reload MainActivity onto the screen.
+
+
+**********************************************************************************************************************************************************************
+
+**SAVE BUTTON ON RESULTS ACTIVITY PAGE**
+
+Desirable:
+The app should display a saved message when the saved button is taped. 
+
+Procedure:
+1.	Tap the save button at the upper right coner of the screen. 
+2.	Weight for a displayed saved message to appear to ensure save was successfully done. 
+
+Result:
+A message will be displayed on the screen stating that the current results have been saved. 
+
+**********************************************************************************************************************************************************************
+
+**SCROLL THROUGH DISPLAYED RESULTS IN RESULTS ACTIVITY**
+
+Desirable:
+The app should have a scrollable results page. 
+
+Procedure:
+1.	Touch the screen with any finger and swipe in an upward and downward direction to scroll through displayed results.  
+ 
+
+Result:
+If found results are more a page long, the screen will be scrollable in an upward or download direction to view all found results.  
+
+
+**********************************************************************************************************************************************************************
+
+**RESULT ACTIVITY TRANSITIONS TO RESULTS VIEW ACTIVITY**
+
+Desirable:
+The app should have display a selected result in a Results View Activity with more details. 
+
+Procedure:
+1.	Tap any of the displayed results in the results activity page.  
+ 
+
+Result:
+The results view activity will open with the selected results displayed with more details such as the section of the library where the book is found.   
+
+**********************************************************************************************************************************************************************
