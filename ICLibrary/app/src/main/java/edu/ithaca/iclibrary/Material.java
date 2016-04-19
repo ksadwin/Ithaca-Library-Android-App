@@ -1,9 +1,12 @@
 package edu.ithaca.iclibrary;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Kelly on 3/29/2016.
  */
-public class Material {
+public class Material implements Parcelable {
     private String bibId; //some kind of internal id number
     private String bibText1; //author
     private String bibText2; //description with title, author, and more
@@ -31,6 +34,50 @@ public class Material {
     }
 
     public Material() {}
+
+    protected Material(Parcel in) {
+        bibId = in.readString();
+        bibText1 = in.readString();
+        bibText2 = in.readString();
+        bibText3 = in.readString();
+        callNumber = in.readString();
+        locationName = in.readString();
+        mfhdCount = in.readInt();
+        itemCount = in.readInt();
+        itemStatusCode = in.readInt();
+        isbn = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(bibId);
+        dest.writeString(bibText1);
+        dest.writeString(bibText2);
+        dest.writeString(bibText3);
+        dest.writeString(callNumber);
+        dest.writeString(locationName);
+        dest.writeInt(mfhdCount);
+        dest.writeInt(itemCount);
+        dest.writeInt(itemStatusCode);
+        dest.writeString(isbn);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Material> CREATOR = new Creator<Material>() {
+        @Override
+        public Material createFromParcel(Parcel in) {
+            return new Material(in);
+        }
+
+        @Override
+        public Material[] newArray(int size) {
+            return new Material[size];
+        }
+    };
 
     public String getBibId() {
         return bibId;

@@ -15,7 +15,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -28,18 +30,7 @@ public class MainActivity extends AppCompatActivity {
     //for logging
     private static final String TAG = "MainActivity";
 
-    /**
-     * Given query type and query text, constructs URL for accessing IC Library database
-     * @param code String, query type. Should be one of the following codes (but probably not GKEY)
-     *             isbn:isbn, TALL:title, GKEY:key, SKEY:subject, NKEY:author
-     * @param query String, query text.
-     * @return URL object
-     * @throws MalformedURLException
-     */
-    public static URL makeURL(String code, String query) throws MalformedURLException{
-        return new URL("http://phoebe.ithaca.edu:7014/vxws/SearchService?searchCode="+code+
-                "&maxResultsPerPage=25&recCount=25&searchArg="+query);
-    }
+
 
     /**
      * Sets view with activity_main XML file.
@@ -75,32 +66,22 @@ public class MainActivity extends AppCompatActivity {
                     //This query type is called "key" in Mariah's code. Not sure what it means
                     queryType = "GKEY";
                 }
-                DatabaseRequest req = new DatabaseRequest();
-                ArrayList<Material> ms = new ArrayList<Material>();
-                try {
-                    //TODO: format query string for URI
-                    //only the first word of the query is actually searched, but that's something.
-                    ms = req.execute(makeURL(queryType, searchBar.getText().toString())).get();
-                    for (Material m : ms) {
-                        Log.v(TAG, m.toString());
-                    }
-                } catch (MalformedURLException e) {
-                    Log.e(TAG, e.toString());
-                } catch (InterruptedException e) {
-                    Log.e(TAG, e.toString());
-                } catch (ExecutionException e) {
-                    Log.e(TAG, e.toString());
+
+                String[] queryArray = {searchBar.getText().toString(), queryType};
+
+                //only proceed if user entered text
+                if (!queryArray[0].equals("")) {
+                    //Create and display the search result activity.
+                    // Displays nothing for the moment.
+                    makeResultsActivity(queryArray);
                 }
 
-                //Create and display the search result activity.
-                // Displays nothing for the moment.
-                makeResultsActivity(ms);
             }
         });
     }
 
     public Spinner spinnerLoader(int id) {
-        Spinner searchType = (Spinner)findViewById(R.id.searchType);
+        Spinner searchType = (Spinner)findViewById(id);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.search_types, android.R.layout.simple_spinner_item);
@@ -114,11 +95,13 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Creates and transitions to the Results View Activity from MainActivity.
+     * @param query: String array of length 2, where [0] is query and [1] is type, to be passed to next Activity.
      */
-    public void makeResultsActivity(ArrayList<Material> res) {
+    public void makeResultsActivity(String[] query) {
         //Create and display the search result activity.
         // Displays nothing for the moment.
         Intent results = new Intent(this, ScrollingActivity.class);
+        results.putExtra("query_terms", query);
         startActivity(results);
     }
 }

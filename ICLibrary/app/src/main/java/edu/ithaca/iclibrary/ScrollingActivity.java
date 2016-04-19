@@ -13,15 +13,42 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.AsyncTask;
+import android.util.Log;
+
+import java.net.URL;
+
 public class ScrollingActivity extends AppCompatActivity {
+    private static final String TAG = "ScrollingActivity";
     private List<Material> myBooks = new ArrayList<>();
+    private ArrayAdapter<Material> adapter;
+    private DatabaseRequest req = new DatabaseRequest();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Get the query terms from MainActivity Intent
+        String[] queryTerms = getIntent().getExtras().getStringArray("query_terms");
+        //Make database request using these terms
+        URL url = null;
+        try {
+            url = XMLParser.makeURL(queryTerms[1], queryTerms[0]);
+        } catch (MalformedURLException | URISyntaxException e) {
+            Log.e(TAG, e.toString());
+        }
+        req.execute(url);
+
+
+
         setContentView(R.layout.activity_scroll);
 
         //populateBookList();
@@ -54,8 +81,8 @@ public class ScrollingActivity extends AppCompatActivity {
     }*/
 
     private void populateListView(){
-        //Build adapter
-        ArrayAdapter<Material> adapter = new MyListAdapter();
+        //initialize adapter
+        adapter = new MyListAdapter();
 
         //configure the list view
         ListView list = (ListView) findViewById(R.id.bookListView);
@@ -95,10 +122,10 @@ public class ScrollingActivity extends AppCompatActivity {
 
             // Fill the view with a book cover
             ImageView imageView = (ImageView)itemView.findViewById(R.id.bookCover);
-            //FIXME: fill with default image?
-            //imageView.setImageResource(currentBook.getIconID());
+            //FIXME: every book will have a default image of the IC logo
+            imageView.setImageResource(R.drawable.iclogo);
 
-            // Tittle:
+            // Title:
             TextView titleText = (TextView) itemView.findViewById(R.id.booktxt_Title);
             titleText.setText(currentBook.getBibText2());
 
@@ -108,13 +135,36 @@ public class ScrollingActivity extends AppCompatActivity {
 
             // Status:
             TextView statusText = (TextView) itemView.findViewById(R.id.booktxt_Status);
-            statusText.setText(currentBook.getItemStatusCode());
+            statusText.setText(Integer.toString(currentBook.getItemStatusCode()));
 
             return itemView;
         }
     }
 
+    /**
+     * Class that makes API requests of the IC Library asynchronously.
+     * @author KSADWIN
+     * 3/27/2016
+     */
+    public class DatabaseRequest extends AsyncTask<URL, Void, ArrayList<Material>> {
 
+        /**
+         * Make API request to Ithaca Library and parse XML response.
+         * @param params: eventually that will contain the URLs to load but presently it does not
+         * @return array of Material objects created from XML found at URL
+         */
+        protected ArrayList<Material> doInBackground(URL... params) {
+            ArrayList<Material> books = new ArrayList<>();
+            for (URL u : params) {
+                books.addAll(XMLParser.getMaterialsFromLibrary(u));
+            }
+            return books;
+        }
+        protected void onPostExecute (ArrayList<Material> materials) {
+            myBooks = materials;
+            populateListView();
+        }
+    }
 
 
 

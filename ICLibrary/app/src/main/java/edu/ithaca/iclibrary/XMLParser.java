@@ -11,6 +11,9 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +25,22 @@ import javax.net.ssl.HttpsURLConnection;
  * @author KSADWIN
  * 3/27/2016
  */
-public class DatabaseRequest extends AsyncTask<URL, Void, ArrayList<Material>> {
-    private static final String TAG = "DatabaseRequest";
-    public Material[] results;
+public class XMLParser {
+    private static final String TAG = "XMLParser";
+
+    /**
+     * Given query type and query text, constructs URL for accessing IC Library database
+     * @param code String, query type. Should be one of the following codes (but probably not GKEY)
+     *             isbn:isbn, TALL:title, GKEY:key, SKEY:subject, NKEY:author
+     * @param query String, query text.
+     * @return URL object
+     * @throws MalformedURLException, URISyntaxException
+     */
+    public static URL makeURL(String code, String query) throws MalformedURLException, URISyntaxException {
+        URI uri = new URI("http", "//phoebe.ithaca.edu:7014/vxws/SearchService?searchCode="+code+
+                "&maxResultsPerPage=25&recCount=25&searchArg="+query, null);
+        return uri.toURL();
+    }
 
     /**
      * Converts InputStream to String.
@@ -86,6 +102,7 @@ public class DatabaseRequest extends AsyncTask<URL, Void, ArrayList<Material>> {
             }
             eventType = parser.next();
         }
+        Log.v(TAG, m.toString());
         return m;
     }
 
@@ -136,22 +153,4 @@ public class DatabaseRequest extends AsyncTask<URL, Void, ArrayList<Material>> {
         }
         return new ArrayList<Material>();
     }
-
-    /**
-     * Make API request to Ithaca Library and parse XML response.
-     * @param params: eventually that will contain the URLs to load but presently it does not
-     * @return array of Material objects created from XML found at URL
-     */
-    protected ArrayList<Material> doInBackground(URL... params) {
-        ArrayList<Material> books = new ArrayList<>();
-        for (URL u : params) {
-            books.addAll(getMaterialsFromLibrary(u));
-        }
-        return books;
-    }
-
-    protected void onPostExecute (Material[] materials) {
-        this.results = materials;
-    }
-
 }
