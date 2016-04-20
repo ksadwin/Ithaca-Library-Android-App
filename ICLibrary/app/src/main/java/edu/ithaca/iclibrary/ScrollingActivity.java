@@ -27,6 +27,7 @@ import java.net.URL;
 
 public class ScrollingActivity extends AppCompatActivity {
     private static final String TAG = "ScrollingActivity";
+
     private List<Material> myBooks = new ArrayList<>();
     private ArrayAdapter<Material> adapter;
     private DatabaseRequest req = new DatabaseRequest();
@@ -39,25 +40,19 @@ public class ScrollingActivity extends AppCompatActivity {
         //Get the query terms from MainActivity Intent
         String[] queryTerms = getIntent().getExtras().getStringArray("query_terms");
         //Make database request using these terms
-        URL url = null;
         try {
-            url = XMLParser.makeURL(queryTerms[1], queryTerms[0]);
+            URL url = XMLParser.makeURL(queryTerms[1], queryTerms[0]);
+            req.execute(url);
         } catch (MalformedURLException | URISyntaxException e) {
             Log.e(TAG, e.toString());
         }
-        req.execute(url);
-
-
 
         setContentView(R.layout.activity_scroll);
 
-        //populateBookList();
-        populateListView();
+        //FIXME: The clicks aren't being registered using this call alone.
         registerItemClick();
 
-
-        /* save button to save search results as history.
-        * work on this to save results on the stack using the savedResultsStorage*/
+        //TODO: work on this to save results on the stack using the savedResultsStorage
         Button savebutton = (Button) findViewById(R.id.savebutton);
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,17 +63,7 @@ public class ScrollingActivity extends AppCompatActivity {
         });
 
     }
-    /*
-    private void populateBookList() {
-        myBooks.add(new Books("Tank and AVF", "Kelly Sadwin", R.drawable.hp, "Available"));
-        myBooks.add(new Books("Tess", "Prof. Noboby", R.drawable.i, "Available"));
-        myBooks.add(new Books("Pride", "Robin Stevens", R.drawable.pride, "Checked Out"));
-        myBooks.add(new Books("Naked Pictures", "Jon Stewart", R.drawable.jonste, "Checked Out!"));
-        myBooks.add(new Books("Letters for Scarlet", "Julie Gardner", R.drawable.p, "Checked Out"));
-        myBooks.add(new Books("Adaptive Web Design", "Aaron Gusatfson", R.drawable.web, "Available"));
-        myBooks.add(new Books("Book Covers", "Trevor Wheeler" , R.drawable.gg, "Available"));
-        myBooks.add(new Books("Passport", "Immigration Office", R.drawable.pp, "Checked Out"));
-    }*/
+
 
     private void populateListView(){
         //initialize adapter
@@ -149,8 +134,9 @@ public class ScrollingActivity extends AppCompatActivity {
     public class DatabaseRequest extends AsyncTask<URL, Void, ArrayList<Material>> {
 
         /**
-         * Make API request to Ithaca Library and parse XML response.
-         * @param params: eventually that will contain the URLs to load but presently it does not
+         * doInBackground is called when the DatabaseRequest object's execute() method is called.
+         * Pass URLs to XMLParser to make API request to Ithaca Library and parse XML response.
+         * @param params: URLs to load
          * @return array of Material objects created from XML found at URL
          */
         protected ArrayList<Material> doInBackground(URL... params) {
@@ -160,35 +146,16 @@ public class ScrollingActivity extends AppCompatActivity {
             }
             return books;
         }
+
+        /**
+         * onPostExecute is called when the DatabaseRequest object completes doInBackground().
+         * Sets ScrollingActivity's member variable myBooks to contain returned materials,
+         * then calls populateListView() to update Activity.
+         * @param materials: the resultant ArrayList of Materials returned by doInBackground().
+         */
         protected void onPostExecute (ArrayList<Material> materials) {
             myBooks = materials;
             populateListView();
         }
     }
-
-
-
-
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_scrolling, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    */
 }

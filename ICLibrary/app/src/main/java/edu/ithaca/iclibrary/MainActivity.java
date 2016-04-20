@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         Button searchButton = (Button) findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                //Log.v(TAG, "query: "+searchBar.getText().toString()+"\ntype: "+searchType.getSelectedItem().toString());
                 String queryType = "";
                 if (searchType.getSelectedItem().toString().equals("Title")) {
                     queryType = "TALL";
@@ -72,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 //only proceed if user entered text
                 if (!queryArray[0].equals("")) {
                     //Create and display the search result activity.
-                    // Displays nothing for the moment.
                     makeResultsActivity(queryArray);
                 }
 
@@ -95,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Creates and transitions to the Results View Activity from MainActivity.
-     * @param query: String array of length 2, where [0] is query and [1] is type, to be passed to next Activity.
+     * @param query: String array of length 2, where [0] is query and [1] is type,
+     *             to be passed to next Activity.
      */
     public void makeResultsActivity(String[] query) {
         //Create and display the search result activity.

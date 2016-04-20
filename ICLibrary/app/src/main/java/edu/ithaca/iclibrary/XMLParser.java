@@ -1,6 +1,5 @@
 package edu.ithaca.iclibrary;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -53,6 +52,13 @@ public class XMLParser {
         return s.hasNext() ? s.next() : "";
     }
 
+    /**
+     * Pulls text from the XML parser's current tag.
+     * @param parser: the in-use XmlPullParser in which the current tag's text is desired
+     * @return either a String or null
+     * @throws XmlPullParserException
+     * @throws IOException
+     */
     public static String getText(XmlPullParser parser) throws XmlPullParserException, IOException {
         if (parser.next() == XmlPullParser.TEXT) {
             return parser.getText();
@@ -60,6 +66,14 @@ public class XMLParser {
         return null;
     }
 
+    /**
+     * Constructs a Material object from a nested group of XML tags as determined by the format of
+     * the IC Library's HTTP response.
+     * @param parser: in-use XmlPullParser at the tag that groups inner tags pertaining to one item
+     * @return Material object
+     * @throws XmlPullParserException
+     * @throws IOException
+     */
     public static Material readMaterial(XmlPullParser parser) throws XmlPullParserException, IOException {
         Material m = new Material();
         int eventType = parser.getEventType();
@@ -108,7 +122,8 @@ public class XMLParser {
 
     /**
      * Parses XML in InputStream (from doInBackground).
-     * @param in
+     * @param in: InputStream from HttpUrlConnection response
+     * @return List<Material> of items found
      * @throws XmlPullParserException
      * @throws IOException
      */
@@ -129,6 +144,11 @@ public class XMLParser {
         return books;
     }
 
+    /**
+     * Makes HTTP request at url and sends response to parser functions,
+     * @param url: URL constructed using IC Library API.
+     * @return List<Materials> of found Materials, or an empty list if anything goes wrong.
+     */
     public static List<Material> getMaterialsFromLibrary(URL url) {
         HttpURLConnection conn = null;
         try {
@@ -142,9 +162,7 @@ public class XMLParser {
             else {
                 Log.e(TAG, "HTTP Response code: "+conn.getResponseCode());
             }
-        } catch (IOException e) {
-            Log.e(TAG, e.toString());
-        } catch (XmlPullParserException e) {
+        } catch (IOException|XmlPullParserException e) {
             Log.e(TAG, e.toString());
         } finally {
             if (conn != null) {
