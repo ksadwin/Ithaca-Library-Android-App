@@ -44,7 +44,7 @@ public class ScrollingActivity extends AppCompatActivity {
             URL url = XMLParser.makeURL(queryTerms[1], queryTerms[0]);
             req.execute(url);
         } catch (MalformedURLException | URISyntaxException e) {
-            Log.e(TAG, e.toString());
+            Log.w(TAG, e.toString());
         }
 
         setContentView(R.layout.activity_scroll);
@@ -83,7 +83,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
                  Material clickedBook = myBooks.get(position);
                  String message = "You clicked position " + position
-                         + " Which is Book Title " + clickedBook.getBibText2();
+                         + " Which is Book Title " + clickedBook.getBibText1();
                  Toast.makeText(ScrollingActivity.this, message, Toast.LENGTH_LONG).show();
              }
          });
@@ -112,11 +112,11 @@ public class ScrollingActivity extends AppCompatActivity {
 
             // Title:
             TextView titleText = (TextView) itemView.findViewById(R.id.booktxt_Title);
-            titleText.setText(currentBook.getBibText2());
+            titleText.setText(currentBook.getBibText1());
 
             // Author:
             TextView authorText = (TextView) itemView.findViewById(R.id.booktxt_Author);
-            authorText.setText("" + currentBook.getBibText1());
+            authorText.setText("" + currentBook.getBibText2());
 
             // Status:
             TextView statusText = (TextView) itemView.findViewById(R.id.booktxt_Status);
@@ -139,6 +139,7 @@ public class ScrollingActivity extends AppCompatActivity {
          * @param params: URLs to load
          * @return array of Material objects created from XML found at URL
          */
+        @Override
         protected ArrayList<Material> doInBackground(URL... params) {
             ArrayList<Material> books = new ArrayList<>();
             for (URL u : params) {
@@ -153,6 +154,7 @@ public class ScrollingActivity extends AppCompatActivity {
          * then calls populateListView() to update Activity.
          * @param materials: the resultant ArrayList of Materials returned by doInBackground().
          */
+        @Override
         protected void onPostExecute (ArrayList<Material> materials) {
             myBooks = materials;
             populateListView();

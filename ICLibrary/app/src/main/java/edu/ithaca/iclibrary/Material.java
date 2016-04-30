@@ -7,8 +7,8 @@ package edu.ithaca.iclibrary;
  */
 public class Material {
     private String bibId; //some kind of internal id number
-    private String bibText1; //author
-    private String bibText2; //description with title, author, and more
+    private String bibText1; //if GKEY search, author; else title/author/other info
+    private String bibText2; //the reverse of bibText1
     private String bibText3; //year
     private String callNumber;
     private String locationName;
@@ -118,4 +118,5 @@ public class Material {
         return "ID "+bibId+"\n"+bibText1+"\n"+bibText2+"\n"+bibText3+"\n"+callNumber+"\n"+locationName
                 +"\n"+isbn+"\n"+mfhdCount+"\t"+itemCount+"\t"+itemStatusCode;
     }
+
 }

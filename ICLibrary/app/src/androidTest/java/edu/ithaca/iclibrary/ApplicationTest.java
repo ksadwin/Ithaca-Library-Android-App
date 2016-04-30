@@ -26,6 +26,10 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.containsString;
 import android.test.ApplicationTestCase;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.util.List;
+
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
@@ -79,12 +83,39 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
         onView(ViewMatchers.withId(R.id.searchType)).
                 perform(click());
-        onData(allOf(is(instanceOf(String.class)),is("Subject"))).
+        onData(allOf(is(instanceOf(String.class)), is("Subject"))).
                 perform(click());
 
         onView(ViewMatchers.withId(R.id.searchType)).
                 perform(click());
-        onData(allOf(is(instanceOf(String.class)),is("Title"))).
+        onData(allOf(is(instanceOf(String.class)), is("Title"))).
                 perform(click());
+    }
+
+    @Test
+    public void dbRequestMakesMaterialList() throws Exception {
+
+        URL maxResults = new URL("http://phoebe.ithaca.edu:7014/vxws/SearchService?searchCode=GKEY&maxResultsPerPage=25&recCount=25&searchArg=lit");
+        URL avgResults = new URL("http://phoebe.ithaca.edu:7014/vxws/SearchService?searchCode=NKEY&maxResultsPerPage=25&recCount=25&searchArg=dickens");
+        URL noResults = new URL("http://phoebe.ithaca.edu:7014/vxws/SearchService?searchCode=isbn&maxResultsPerPage=25&recCount=25&searchArg=ASDFGHJKL");
+        List<Material> lMax = XMLParser.getMaterialsFromLibrary(maxResults);
+        List<Material> lAvg = XMLParser.getMaterialsFromLibrary(avgResults);
+        List<Material> lNone = XMLParser.getMaterialsFromLibrary(noResults);
+        assertNotNull(lMax);
+        assertEquals(25, lMax.size());
+        assertNotNull(lAvg);
+        assertNotSame(0, lAvg.size());
+        assertNotNull(lNone);
+        assertEquals(0, lNone.size());
+    }
+
+    @Test
+    public void googleBooksTest() throws Exception {
+        String query = "978-3-16-148410-0";
+        URL realBook = GoogleJSONParser.makeGoogleURL(query);
+        InputStream in = GoogleJSONParser.getJSONFromGoogle(realBook);
+        String imageUrl = GoogleJSONParser.getImageURLfromJSON(in);
+        String description = GoogleJSONParser.getDescriptionFromJSON(in);
+        assertNotNull(in);
     }
 }

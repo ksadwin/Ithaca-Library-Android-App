@@ -1,5 +1,6 @@
 package edu.ithaca.iclibrary;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -40,6 +41,7 @@ public class XMLParser {
                 "&maxResultsPerPage=25&recCount=25&searchArg="+query, null);
         return uri.toURL();
     }
+
 
     /**
      * Converts InputStream to String.
@@ -160,10 +162,10 @@ public class XMLParser {
                 return parseXML(in);
             }
             else {
-                Log.e(TAG, "HTTP Response code: "+conn.getResponseCode());
+                Log.w(TAG, "HTTP Response code: "+conn.getResponseCode());
             }
         } catch (IOException|XmlPullParserException e) {
-            Log.e(TAG, e.toString());
+            Log.w(TAG, e.toString());
         } finally {
             if (conn != null) {
                 conn.disconnect();
@@ -171,4 +173,6 @@ public class XMLParser {
         }
         return new ArrayList<Material>();
     }
+
+
 }

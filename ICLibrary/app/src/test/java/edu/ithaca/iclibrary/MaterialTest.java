@@ -12,10 +12,10 @@ import static org.junit.Assert.*;
 public class MaterialTest {
 
     @Test
-    public static void testMaterialParcelability() {
+    public static void testMaterial() {
         Material normalInput = new Material("12345", "Chuckie Dickens", "Story About Two Towns",
                 "1800", "67890", "The Bookshelf on the Right", 1, 1, 1, "1234567890");
-        Parcel normalParcel = Parcel.obtain();
+
         //normalInput.writeToParcel(normalParcel, null);
     }
 
