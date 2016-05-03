@@ -159,10 +159,12 @@ public class XMLParser {
             conn.connect();
             if(conn.getResponseCode() == HttpsURLConnection.HTTP_OK){
                 InputStream in = new BufferedInputStream(conn.getInputStream());
-                return parseXML(in);
+                List<Material> materials = parseXML(in);
+                in.close();
+                return materials;
             }
             else {
-                Log.w(TAG, "HTTP Response code: "+conn.getResponseCode());
+                Log.w(TAG, "HTTP Response code: " + conn.getResponseCode());
             }
         } catch (IOException|XmlPullParserException e) {
             Log.w(TAG, e.toString());

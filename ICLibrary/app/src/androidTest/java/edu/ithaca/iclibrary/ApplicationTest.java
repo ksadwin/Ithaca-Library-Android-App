@@ -2,11 +2,13 @@ package edu.ithaca.iclibrary;
 
 import android.app.Application;
 
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import android.graphics.Bitmap;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.assertion.ViewAssertions;
@@ -25,6 +27,8 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.containsString;
 import android.test.ApplicationTestCase;
+import android.util.Log;
+import android.widget.ImageView;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -108,14 +112,34 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         assertNotNull(lNone);
         assertEquals(0, lNone.size());
     }
-
+/*
     @Test
     public void googleBooksTest() throws Exception {
+        URL notabook = GoogleJSONParser.makeGoogleURL("notabooknotabook");
+        InputStream badIn = GoogleJSONParser.getJSONFromGoogle(notabook);
+        Log.d("googleBooksTest", GoogleJSONParser.convertStreamToString(badIn));
+        JSONObject badJson = new JSONObject(GoogleJSONParser.convertStreamToString(badIn));
+        badIn.close();
+        String noUrl = GoogleJSONParser.getImageURLfromJSON(badJson);
+        String noDesc = GoogleJSONParser.getDescriptionFromJSON(badJson);
+        assertNull(noUrl);
+        assertNull(noDesc);
+
         String query = "978-3-16-148410-0";
         URL realBook = GoogleJSONParser.makeGoogleURL(query);
         InputStream in = GoogleJSONParser.getJSONFromGoogle(realBook);
-        String imageUrl = GoogleJSONParser.getImageURLfromJSON(in);
-        String description = GoogleJSONParser.getDescriptionFromJSON(in);
-        assertNotNull(in);
+        JSONObject json = GoogleJSONParser.getFirstBookFromJSONStream(in);
+        in.close();
+        String description = GoogleJSONParser.getDescriptionFromJSON(json);
+        assertNotNull(description);
+
+        String imageUrl = GoogleJSONParser.getImageURLfromJSON(json);
+        URL goodImgUrl = new URL(imageUrl);
+        URL validUrlNoImg = new URL("https://google.com");
+        Bitmap goodImg = GoogleJSONParser.getImageFromURL(goodImgUrl);
+        Bitmap noImg = GoogleJSONParser.getImageFromURL(validUrlNoImg);
+        assertNotNull(goodImg);
+        assertNull(noImg);
     }
+*/
 }
