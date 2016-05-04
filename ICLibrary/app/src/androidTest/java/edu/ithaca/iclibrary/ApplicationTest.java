@@ -2,11 +2,16 @@ package edu.ithaca.iclibrary;
 
 import android.app.Application;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 
+import android.content.Context;
+import android.os.Environment;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.assertion.ViewAssertions;
@@ -24,23 +29,51 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.containsString;
+
+import android.test.AndroidTestCase;
 import android.test.ApplicationTestCase;
+import android.test.InstrumentationTestCase;
 
-/**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
- */
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+
+
 @RunWith(AndroidJUnit4.class)
-public class ApplicationTest extends ApplicationTestCase<Application> {
-    public ApplicationTest() {
-        super(Application.class);
-    }
-
-    String oneWordQuery = "dickens";
-    String multiWordQuery = "The Cat in the Hat";
+public class ApplicationTest extends InstrumentationTestCase {
 
     @Rule
     public ActivityTestRule<MainActivity> mainTest =
             new ActivityTestRule<>(MainActivity.class);
+
+    String oneWordQuery = "dickens";
+    String multiWordQuery = "The Cat in the Hat";
+
+    //MaterialCoder test variables
+    public MaterialCoder matMaker = new MaterialCoder(mainTest.getActivity());
+    public Material mockMat = new Material("12345", "Chuckie Dickens", "Story About Two Towns",
+            "1800", "67890", "The Bookshelf on the Right", 1, 1, 1, "1234567890");
+    public JSONObject test = new JSONObject();
+
+    @Before
+    public void setup(){
+        try{
+            test.put("bibID","12345");
+            test.put("bibText1","Chuckie Dickens");
+            test.put("bibText2", "Story About Two Towns");
+            test.put("bibText3", "1800");
+            test.put("callNumber", "67890");
+            test.put("locationName", "The Bookshelf on the Right");
+            test.put("mfhdCount", 1);
+            test.put("itemCount", 1);
+            test.put("itemStatusCode",1);
+            test.put("isbn", "1234567890");
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+    }
 
     @Test
     public void oneWordStringIsRecorded() throws Exception{
@@ -86,5 +119,53 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
                 perform(click());
         onData(allOf(is(instanceOf(String.class)),is("Title"))).
                 perform(click());
+    }
+
+    /**
+     * Tests that MaterialCoder.encode generates a JSON identical to test.
+     * @throws Exception
+     */
+    @Test
+    public void encodeReturnsJSONObject() throws Exception{
+
+        JSONObject obj = matMaker.encode(mockMat);
+
+        assertTrue(obj.toString().compareTo(test.toString()) == 0);
+    }
+
+    @Test
+    public void saveMatWritesFile() throws Exception{
+        JSONObject obj = matMaker.encode(mockMat);
+        matMaker.saveMat(mockMat);
+        FileInputStream favsText = null;
+        String sampleMatString;
+
+
+        try{
+            File favs = new File(matMaker.getFileDirectoryPath());
+            favsText = new FileInputStream(favs);
+        }
+        catch(Exception e){
+            throw e;
+        }
+        InputStreamReader isr = new InputStreamReader(favsText);
+        BufferedReader br = new BufferedReader(isr);
+
+        try{
+            sampleMatString = br.readLine();
+        }catch(Exception e){
+            throw e;
+        }
+
+            assertTrue(((obj.toString()).equals(sampleMatString)));
+    }
+
+    @Test
+    public void materialFromJsonFunctionality() throws Exception{
+        JSONObject obj = matMaker.encode(mockMat);
+        Material mat = matMaker.decode(obj);
+
+        assertTrue(obj.toString().equals(matMaker.encode(mat).toString()));
+
     }
 }

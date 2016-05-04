@@ -1,7 +1,18 @@
 package edu.ithaca.iclibrary;
 
+import android.content.Context;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
-import org.json.simple.JSONObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 
 /**
@@ -9,11 +20,144 @@ import org.json.simple.JSONObject;
  */
 public class MaterialCoder {
 
-    public JSONObject encode(Material mat){
+    private static String appFolder = "ICLibrary";
+    private static String favFileName = "Favorites.txt";
+    private static Context con;
+
+    public MaterialCoder(Context context){
+        con = context;
+    }
+
+    /**
+     * Creates JSONObject from Material mat.
+     * @param mat
+     * @return
+     */
+    public static JSONObject encode(Material mat){
 
         JSONObject jsonMat = new JSONObject();
+
+        try{
+            jsonMat.put("bibID", mat.getBibId());
+            jsonMat.put("bibText1",mat.getBibText1());
+            jsonMat.put("bibText2", mat.getBibText2());
+            jsonMat.put("bibText3", mat.getBibText3());
+            jsonMat.put("callNumber", mat.getCallNumber());
+            jsonMat.put("locationName", mat.getLocationName());
+            jsonMat.put("mfhdCount", mat.getMfhdCount());
+            jsonMat.put("itemCount", mat.getItemCount());
+            jsonMat.put("itemStatusCode",mat.getItemStatusCode());
+            jsonMat.put("isbn", mat.getIsbn());
+
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
 
         return jsonMat;
     }
 
+    public static List<JSONObject> encode(List<Material> listMat){
+        List<JSONObject> jsons = new ArrayList<JSONObject>();
+        for (Material mat : listMat) {
+            JSONObject place = encode(mat);
+            jsons.add(place);
+        }
+
+        return jsons;
+    }
+
+    /**
+     * Saves a JSON string of mat to the savePath.txt file in the directory
+     * of path.
+     * @param mat
+     */
+    public static void saveMat(Material mat){
+        String lineToWrite = encode(mat).toString();
+        FileWriter saver = null;
+
+        try{
+            File saveDir = new File(con.getFilesDir(), appFolder);
+            if (!saveDir.exists()) {
+                saveDir.mkdirs();
+            }
+            File favs = new File(saveDir, favFileName);
+            saver = new FileWriter(favs);
+            saver.append(lineToWrite+"\n");
+            saver.flush();
+            saver.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void saveMats(List<Material> listMat){
+        for(Material mat: listMat){
+            saveMat(mat);
+        }
+    }
+
+    public String getFileDirectoryPath(){
+        return con.getFilesDir() + "/" + appFolder + "/" + favFileName;
+    }
+
+    public Material decode(JSONObject enc){
+        Material mat = new Material();
+
+        try{
+            mat.setBibId(enc.getString("bibID"));
+            mat.setBibText1(enc.getString("bibText1"));
+            mat.setBibText2(enc.getString("bibText2"));
+            mat.setBibText3(enc.getString("bibText3"));
+            mat.setCallNumber(enc.getString("callNumber"));
+            mat.setLocationName(enc.getString("locationName"));
+            mat.setMfhdCount(enc.getInt("mfhdCount"));
+            mat.setItemCount(enc.getInt("itemCount"));
+            mat.setItemStatusCode(enc.getInt("itemStatusCode"));
+            mat.setIsbn(enc.getString("isbn"));
+
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        return mat;
+    }
+
+    public List<Material> decode(List<JSONObject> listEnc){
+        ArrayList<Material> listMat = new ArrayList<Material>();
+
+        for(JSONObject json: listEnc){
+            Material mat = decode(json);
+            listMat.add(mat);
+        }
+
+        return listMat;
+    }
+
+    public List<JSONObject> unpack(String filePath){
+        File favs = null;
+        FileInputStream fis = null;
+        String jsonStr = null;
+        List listJSON = new ArrayList<JSONObject>();
+
+        try{
+            favs = new File(filePath);
+            fis = new FileInputStream(favs);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        InputStreamReader isr = new InputStreamReader(fis);
+        BufferedReader br = new BufferedReader(isr);
+
+        try{
+            while((jsonStr = br.readLine()) != null){
+                JSONObject json = (JSONObject) new JSONTokener(jsonStr).nextValue();
+                listJSON.add(json);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return listJSON;
+    }
 }
