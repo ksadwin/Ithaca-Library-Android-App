@@ -1,5 +1,6 @@
 package edu.ithaca.iclibrary;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 public class MainActivity extends AppCompatActivity {
     //for logging
     private static final String TAG = "MainActivity";
+    private static MaterialCoder matSaver;
 
 
 
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        matSaver = new MaterialCoder(getBaseContext());
 
         //get search bar from XML & make it final so that event listener can access text
         final EditText searchBar = (EditText) findViewById(R.id.editQuery);
@@ -92,4 +96,9 @@ public class MainActivity extends AppCompatActivity {
         results.putExtra("query_terms", query);
         startActivity(results);
     }
+
+    public MaterialCoder getMatSaver(){
+        return matSaver;
+    }
+
 }
