@@ -94,7 +94,7 @@ public class MaterialCoder {
                 saveDir.mkdirs();
             }
             File favs = new File(saveDir, favFileName);
-            saver = new FileWriter(favs);
+            saver = new FileWriter(favs, true);
             saver.append(lineToWrite+"\n");
             saver.flush();
             saver.close();

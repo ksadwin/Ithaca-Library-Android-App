@@ -30,13 +30,15 @@ public class ScrollingActivity extends AppCompatActivity {
     private List<Material> myBooks = new ArrayList<>();
     private ArrayAdapter<Material> adapter;
     private DatabaseRequest req = new DatabaseRequest();
-    private MaterialCoder matMaker = new MaterialCoder(getBaseContext());
+    private MaterialCoder matMaker = null;
     public static Material currBook = new Material();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        matMaker = new MaterialCoder(getApplicationContext());
 
         //Show loading message
         Toast.makeText(ScrollingActivity.this, "Searching...", Toast.LENGTH_LONG).show();
@@ -69,7 +71,7 @@ public class ScrollingActivity extends AppCompatActivity {
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-                Toast.makeText(ScrollingActivity.this, "Current Search Results have been \"Saved\"!!",
+                Toast.makeText(ScrollingActivity.this, "Current search results have been saved!!",
                         Toast.LENGTH_LONG).show();
             }
         });

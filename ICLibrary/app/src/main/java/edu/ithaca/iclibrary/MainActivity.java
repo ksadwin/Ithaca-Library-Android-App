@@ -20,8 +20,6 @@ public class MainActivity extends AppCompatActivity {
     //for logging
     private static final String TAG = "MainActivity";
 
-
-
     /**
      * Sets view with activity_main XML file.
      * Creates an EditText searchbar dynamically with

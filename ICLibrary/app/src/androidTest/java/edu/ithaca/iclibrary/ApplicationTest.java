@@ -214,4 +214,17 @@ public class ApplicationTest extends InstrumentationTestCase {
         assertTrue(obj.toString().equals(matMaker.encode(mat).toString()));
 
     }
+
+    @Test
+    public void unpackFromFile() throws Exception{
+        matMaker.saveMat(mockMat);
+        matMaker.saveMat(mockMat);
+        FileInputStream favsText = null;
+        String sampleMatString;
+
+        List<JSONObject> jsonList = matMaker.unpack(matMaker.getFileDirectoryPath());
+        for(JSONObject j: jsonList){
+            onView(withId(R.id.editQuery)).perform(click(),ViewActions.typeText(j.toString()));
+        }
+    }
 }

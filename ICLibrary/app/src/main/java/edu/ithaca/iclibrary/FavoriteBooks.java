@@ -12,11 +12,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class FavoriteBooks extends AppCompatActivity {
-    private List<CheckedFavBks> myBooks = new ArrayList<CheckedFavBks>();
+    private List<Material> myBooks = new ArrayList<Material>();
+    private MaterialCoder matMaker = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,26 +28,25 @@ public class FavoriteBooks extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        matMaker = new MaterialCoder(getApplicationContext());
+
         populateBookList();
         populateListView();
         registerItemClick();
 
     }
-    //this will be redefined to use Joe's methods
+
     private void populateBookList() {
-        myBooks.add(new CheckedFavBks("Tank and AVF", "Kelly Sadwin",  R.drawable.iclogo, "Available","0112358475"));
-        myBooks.add(new CheckedFavBks("Tess", "Prof. Noboby",  R.drawable.iclogo, "Available","0112358475"));
-        myBooks.add(new CheckedFavBks("Pride", "Robin Stevens",  R.drawable.iclogo, "Checked Out","0112358475"));
-        myBooks.add(new CheckedFavBks("Naked Pictures", "Jon Stewart",  R.drawable.iclogo, "Checked Out!","0112358475"));
-        myBooks.add(new CheckedFavBks("Letters for Scarlet", "Julie Gardner",  R.drawable.iclogo, "Checked Out","0112358475"));
-        myBooks.add(new CheckedFavBks("Adaptive Web Design", "Aaron Gusatfson", R.drawable.iclogo, "Available", "0112358475"));
-        myBooks.add(new CheckedFavBks("Book Covers", "Trevor Wheeler",  R.drawable.iclogo, "Available", "0112358475"));
-        myBooks.add(new CheckedFavBks("Passport", "Immigration Office", R.drawable.iclogo, "Checked Out", "0112358475"));
+        List<JSONObject> jsonFavs = matMaker.unpack(matMaker.getFileDirectoryPath());
+        List<Material> favMats = matMaker.decode(jsonFavs);
+        for(Material mat: favMats){
+            myBooks.add(mat);
+        }
     }
 
     private void populateListView() {
         //Build adapter
-        ArrayAdapter<CheckedFavBks> adapter = new MyListAdapter();
+        ArrayAdapter<Material> adapter = new MyListAdapter();
 
         //configure the list view
         ListView list = (ListView) findViewById(R.id.favListView);
@@ -58,15 +60,15 @@ public class FavoriteBooks extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View viewClicked,
                                     int position, long id) {
 
-                CheckedFavBks clickedBook = myBooks.get(position);
-                String message = "You clicked position " + position
-                        + " Which is Book Tittle " + clickedBook.getTittle();
-                Toast.makeText(FavoriteBooks.this, message, Toast.LENGTH_LONG).show();
+                Material clickedBook = myBooks.get(position);
+//                String message = "You clicked position " + position
+//                        + " Which is Book Tittle " + clickedBook.getBibText1();
+                //Toast.makeText(FavoriteBooks.this, message, Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private class MyListAdapter extends ArrayAdapter<CheckedFavBks> {
+    private class MyListAdapter extends ArrayAdapter<Material> {
         public MyListAdapter() {
             super(FavoriteBooks.this, R.layout.content_favorite, myBooks);
         }
@@ -80,27 +82,27 @@ public class FavoriteBooks extends AppCompatActivity {
             }
 
             // Find the Book to work with.
-            CheckedFavBks currentBook = myBooks.get(position);
+            Material currentBook = myBooks.get(position);
 
             // Fill the view with a book cover
             ImageView imageView = (ImageView) itemView.findViewById(R.id.bookCover);
-            imageView.setImageResource(currentBook.getIconID());
+            imageView.setImageResource(R.drawable.iclogo);
 
             // Tittle:
             TextView tittleText = (TextView) itemView.findViewById(R.id.booktxt_Title);
-            tittleText.setText(currentBook.getTittle());
+            tittleText.setText(currentBook.getBibText1());
 
             // Author:
             TextView authorText = (TextView) itemView.findViewById(R.id.booktxt_Author);
-            authorText.setText("" + currentBook.getAuthor());
+            authorText.setText("" + currentBook.getBibText2());
 
             // Status:
             TextView statusText = (TextView) itemView.findViewById(R.id.booktxt_Status);
-            statusText.setText(currentBook.getStatus());
+            statusText.setText(""+ currentBook.getItemStatusCode());
 
             // ISBN:
             TextView isbn = (TextView) itemView.findViewById(R.id.booktxt_Status);
-            statusText.setText(currentBook.getStatus());
+            statusText.setText(currentBook.getIsbn());
 
             return itemView;
         }
