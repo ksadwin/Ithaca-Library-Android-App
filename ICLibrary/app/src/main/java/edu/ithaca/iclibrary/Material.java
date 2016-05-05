@@ -45,7 +45,18 @@ public class Material {
         this.isbn = isbn;
     }
 
-    public Material() {}
+    public Material() {
+        this.bibId = "";
+        this.bibText1 = "";
+        this.bibText2 = "";
+        this.bibText3 = "";
+        this.callNumber = "";
+        this.locationName = "";
+        this.mfhdCount = -1;
+        this.itemCount = -1;
+        this.itemStatusCode = -1;
+        this.isbn = "";
+    }
 
     public String getBibId() {
         return bibId;
