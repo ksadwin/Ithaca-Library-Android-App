@@ -24,6 +24,10 @@ public class MaterialCoder {
     private static String favFileName = "Favorites.txt";
     private static Context con;
 
+    /**
+     * Constructs a new MaterialCoder with a Context to direct it to a save file location.
+     * @param context
+     */
     public MaterialCoder(Context context){
         con = context;
     }
@@ -56,6 +60,12 @@ public class MaterialCoder {
         return jsonMat;
     }
 
+    /**
+     * Returns a list of JSONObjects containing the data of Materials
+     * in Material List listMat.
+     * @param listMat
+     * @return
+     */
     public static List<JSONObject> encode(List<Material> listMat){
         List<JSONObject> jsons = new ArrayList<JSONObject>();
         for (Material mat : listMat) {
@@ -91,16 +101,32 @@ public class MaterialCoder {
 
     }
 
+    /**
+     * Writes the data of listMat to a save file in a location determined
+     * by the MaterialCoder's Context. Data is encoded as JSONStrings.
+     * @param listMat
+     */
     public static void saveMats(List<Material> listMat){
         for(Material mat: listMat){
             saveMat(mat);
         }
     }
 
+    /**
+     * Returns the MaterialCoder's Context's save path for files, plus
+     * the folder name for the ICLibrary app and the name of the
+     * text file in which Favorites are saved (i.e. ..../ICLibrary/Favorites.txt).
+     * @return
+     */
     public String getFileDirectoryPath(){
         return con.getFilesDir() + "/" + appFolder + "/" + favFileName;
     }
 
+    /**
+     * Returns a Material made from data stored in enc.
+     * @param enc
+     * @return
+     */
     public Material decode(JSONObject enc){
         Material mat = new Material();
 
@@ -123,6 +149,11 @@ public class MaterialCoder {
         return mat;
     }
 
+    /**
+     * Returns a List of Materials made from data stored in listEnc.
+     * @param listEnc
+     * @return
+     */
     public List<Material> decode(List<JSONObject> listEnc){
         ArrayList<Material> listMat = new ArrayList<Material>();
 
@@ -134,6 +165,12 @@ public class MaterialCoder {
         return listMat;
     }
 
+    /**
+     * Returns a list of JSONObjects from the file at filePath.
+     * The JSONObjects contain data for Materials.
+     * @param filePath
+     * @return
+     */
     public List<JSONObject> unpack(String filePath){
         File favs = null;
         FileInputStream fis = null;
