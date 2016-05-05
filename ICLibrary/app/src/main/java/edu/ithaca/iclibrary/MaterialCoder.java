@@ -1,6 +1,7 @@
 package edu.ithaca.iclibrary;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -86,6 +87,7 @@ public class MaterialCoder {
      */
     public static void saveMat(Material mat){
         String lineToWrite = encode(mat).toString();
+        Log.d("Encode", lineToWrite);
         FileWriter saver = null;
 
         try{
@@ -135,16 +137,63 @@ public class MaterialCoder {
 
         try{
             mat.setBibId(enc.getString("bibID"));
-            mat.setBibText1(enc.getString("bibText1"));
-            mat.setBibText2(enc.getString("bibText2"));
-            mat.setBibText3(enc.getString("bibText3"));
-            mat.setCallNumber(enc.getString("callNumber"));
-            mat.setLocationName(enc.getString("locationName"));
-            mat.setMfhdCount(enc.getInt("mfhdCount"));
-            mat.setItemCount(enc.getInt("itemCount"));
-            mat.setItemStatusCode(enc.getInt("itemStatusCode"));
-            mat.setIsbn(enc.getString("isbn"));
 
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        try{
+            mat.setBibText1(enc.getString("bibText1"));
+
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        try{
+            mat.setBibText2(enc.getString("bibText2"));
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        try{
+            mat.setBibText3(enc.getString("bibText3"));
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        try{
+            mat.setCallNumber(enc.getString("callNumber"));
+
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        try{
+            mat.setLocationName(enc.getString("locationName"));
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        try{
+            mat.setMfhdCount(enc.getInt("mfhdCount"));
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        try{
+            mat.setItemCount(enc.getInt("itemCount"));
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        try{
+            mat.setItemStatusCode(enc.getInt("itemStatusCode"));
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        try{
+            mat.setIsbn(enc.getString("isbn"));
         }catch(JSONException e){
             e.printStackTrace();
         }
@@ -193,6 +242,7 @@ public class MaterialCoder {
             while((jsonStr = br.readLine()) != null){
                 JSONObject json = (JSONObject) new JSONTokener(jsonStr).nextValue();
                 listJSON.add(json);
+                Log.d("Decode",json.toString());
             }
         }catch(Exception e){
             e.printStackTrace();

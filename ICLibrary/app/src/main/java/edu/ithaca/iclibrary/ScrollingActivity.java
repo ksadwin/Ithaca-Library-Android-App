@@ -182,6 +182,9 @@ public class ScrollingActivity extends AppCompatActivity {
             // Title:
             TextView titleText = (TextView) itemView.findViewById(R.id.booktxt_Title);
             titleText.setText(currentBook.getBibText1());
+            if(currentBook.getBibText1() == null){
+                titleText.setText("No Author");
+            }
 
             // Author:
             TextView authorText = (TextView) itemView.findViewById(R.id.booktxt_Author);

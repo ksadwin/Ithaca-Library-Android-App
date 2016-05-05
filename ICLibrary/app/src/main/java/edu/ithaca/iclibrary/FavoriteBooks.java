@@ -88,17 +88,17 @@ public class FavoriteBooks extends AppCompatActivity {
             ImageView imageView = (ImageView) itemView.findViewById(R.id.bookCover);
             imageView.setImageResource(R.drawable.iclogo);
 
-            // Tittle:
+            // Title:
             TextView tittleText = (TextView) itemView.findViewById(R.id.booktxt_Title);
             tittleText.setText(currentBook.getBibText1());
 
             // Author:
             TextView authorText = (TextView) itemView.findViewById(R.id.booktxt_Author);
-            authorText.setText("" + currentBook.getBibText2());
+            authorText.setText(currentBook.getBibText2());
 
             // Status:
             TextView statusText = (TextView) itemView.findViewById(R.id.booktxt_Status);
-            statusText.setText(""+ currentBook.getItemStatusCode());
+            statusText.setText(currentBook.translateItemStatusCode());
 
             // ISBN:
             TextView isbn = (TextView) itemView.findViewById(R.id.booktxt_Status);
