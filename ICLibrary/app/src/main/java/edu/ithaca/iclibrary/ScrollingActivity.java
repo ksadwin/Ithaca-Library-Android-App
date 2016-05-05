@@ -1,5 +1,6 @@
 package edu.ithaca.iclibrary;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -37,14 +38,19 @@ public class ScrollingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Show loading message
+        Toast.makeText(ScrollingActivity.this, "Searching...", Toast.LENGTH_LONG).show();
+
         //Get the query terms from MainActivity Intent
         String[] queryTerms = getIntent().getExtras().getStringArray("query_terms");
+
         //Make database request using these terms
         try {
             URL url = XMLParser.makeURL(queryTerms[1], queryTerms[0]);
             req.execute(url);
         } catch (MalformedURLException | URISyntaxException e) {
-            Log.e(TAG, e.toString());
+            Log.w(TAG, e.toString());
+            Toast.makeText(ScrollingActivity.this, "No results found.", Toast.LENGTH_LONG).show();
         }
 
         setContentView(R.layout.activity_scroll);
@@ -61,33 +67,39 @@ public class ScrollingActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
 
-    private void populateListView(){
-        //initialize adapter
-        adapter = new MyListAdapter();
 
-        //configure the list view
+
+    private void populateListView() {
+        if (myBooks.size() > 0) {
+            //initialize adapter
+            adapter = new MyListAdapter();
+
+            //configure the list view
+            ListView list = (ListView) findViewById(R.id.bookListView);
+            list.setAdapter(adapter);
+        } else {
+            Toast.makeText(ScrollingActivity.this, "No results found.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void registerItemClick() {
         ListView list = (ListView) findViewById(R.id.bookListView);
-        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked,
+                                    int position, long id) {
+
+                Material clickedBook = myBooks.get(position);
+                String message = "You clicked position " + position
+                        + " Which is Book Title " + clickedBook.getBibText1();
+                Toast.makeText(ScrollingActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
-     private void registerItemClick(){
-         ListView list = (ListView) findViewById(R.id.bookListView);
-         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-             @Override
-             public void onItemClick(AdapterView<?> parent, View viewClicked,
-                                     int position, long id) {
-
-                 Material clickedBook = myBooks.get(position);
-                 String message = "You clicked position " + position
-                         + " Which is Book Title " + clickedBook.getBibText2();
-                 Toast.makeText(ScrollingActivity.this, message, Toast.LENGTH_LONG).show();
-             }
-         });
-     }
 
     private class MyListAdapter extends ArrayAdapter<Material> {
         public MyListAdapter() {
@@ -106,21 +118,21 @@ public class ScrollingActivity extends AppCompatActivity {
             Material currentBook = myBooks.get(position);
 
             // Fill the view with a book cover
-            ImageView imageView = (ImageView)itemView.findViewById(R.id.bookCover);
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.bookCover);
             //FIXME: every book will have a default image of the IC logo
             imageView.setImageResource(R.drawable.iclogo);
 
             // Title:
             TextView titleText = (TextView) itemView.findViewById(R.id.booktxt_Title);
-            titleText.setText(currentBook.getBibText2());
+            titleText.setText(currentBook.getBibText1());
 
             // Author:
             TextView authorText = (TextView) itemView.findViewById(R.id.booktxt_Author);
-            authorText.setText("" + currentBook.getBibText1());
+            authorText.setText(currentBook.getBibText2());
 
             // Status:
             TextView statusText = (TextView) itemView.findViewById(R.id.booktxt_Status);
-            statusText.setText(Integer.toString(currentBook.getItemStatusCode()));
+            statusText.setText(currentBook.translateItemStatusCode());
 
             return itemView;
         }
@@ -128,17 +140,20 @@ public class ScrollingActivity extends AppCompatActivity {
 
     /**
      * Class that makes API requests of the IC Library asynchronously.
+     *
      * @author KSADWIN
-     * 3/27/2016
+     *         3/27/2016
      */
     public class DatabaseRequest extends AsyncTask<URL, Void, ArrayList<Material>> {
 
         /**
          * doInBackground is called when the DatabaseRequest object's execute() method is called.
          * Pass URLs to XMLParser to make API request to Ithaca Library and parse XML response.
+         *
          * @param params: URLs to load
          * @return array of Material objects created from XML found at URL
          */
+        @Override
         protected ArrayList<Material> doInBackground(URL... params) {
             ArrayList<Material> books = new ArrayList<>();
             for (URL u : params) {
@@ -151,9 +166,11 @@ public class ScrollingActivity extends AppCompatActivity {
          * onPostExecute is called when the DatabaseRequest object completes doInBackground().
          * Sets ScrollingActivity's member variable myBooks to contain returned materials,
          * then calls populateListView() to update Activity.
+         *
          * @param materials: the resultant ArrayList of Materials returned by doInBackground().
          */
-        protected void onPostExecute (ArrayList<Material> materials) {
+        @Override
+        protected void onPostExecute(ArrayList<Material> materials) {
             myBooks = materials;
             populateListView();
         }

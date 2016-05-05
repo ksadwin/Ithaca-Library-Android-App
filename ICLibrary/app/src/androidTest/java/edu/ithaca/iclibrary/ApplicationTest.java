@@ -10,8 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
-import android.content.Context;
-import android.os.Environment;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.assertion.ViewAssertions;
@@ -32,6 +30,8 @@ import static org.hamcrest.Matchers.containsString;
 
 import android.test.AndroidTestCase;
 import android.test.ApplicationTestCase;
+import java.net.URL;
+import java.util.List;
 import android.test.InstrumentationTestCase;
 
 import java.io.BufferedReader;
@@ -112,15 +112,61 @@ public class ApplicationTest extends InstrumentationTestCase {
 
         onView(ViewMatchers.withId(R.id.searchType)).
                 perform(click());
-        onData(allOf(is(instanceOf(String.class)),is("Subject"))).
+        onData(allOf(is(instanceOf(String.class)), is("Subject"))).
                 perform(click());
 
         onView(ViewMatchers.withId(R.id.searchType)).
                 perform(click());
-        onData(allOf(is(instanceOf(String.class)),is("Title"))).
+        onData(allOf(is(instanceOf(String.class)), is("Title"))).
                 perform(click());
     }
 
+    @Test
+    public void dbRequestMakesMaterialList() throws Exception {
+
+        URL maxResults = new URL("http://phoebe.ithaca.edu:7014/vxws/SearchService?searchCode=GKEY&maxResultsPerPage=25&recCount=25&searchArg=lit");
+        URL avgResults = new URL("http://phoebe.ithaca.edu:7014/vxws/SearchService?searchCode=NKEY&maxResultsPerPage=25&recCount=25&searchArg=dickens");
+        URL noResults = new URL("http://phoebe.ithaca.edu:7014/vxws/SearchService?searchCode=isbn&maxResultsPerPage=25&recCount=25&searchArg=ASDFGHJKL");
+        List<Material> lMax = XMLParser.getMaterialsFromLibrary(maxResults);
+        List<Material> lAvg = XMLParser.getMaterialsFromLibrary(avgResults);
+        List<Material> lNone = XMLParser.getMaterialsFromLibrary(noResults);
+        assertNotNull(lMax);
+        assertEquals(25, lMax.size());
+        assertNotNull(lAvg);
+        assertNotSame(0, lAvg.size());
+        assertNotNull(lNone);
+        assertEquals(0, lNone.size());
+    }
+/*
+    @Test
+    public void googleBooksTest() throws Exception {
+        URL notabook = GoogleJSONParser.makeGoogleURL("notabooknotabook");
+        InputStream badIn = GoogleJSONParser.getJSONFromGoogle(notabook);
+        Log.d("googleBooksTest", GoogleJSONParser.convertStreamToString(badIn));
+        JSONObject badJson = new JSONObject(GoogleJSONParser.convertStreamToString(badIn));
+        badIn.close();
+        String noUrl = GoogleJSONParser.getImageURLfromJSON(badJson);
+        String noDesc = GoogleJSONParser.getDescriptionFromJSON(badJson);
+        assertNull(noUrl);
+        assertNull(noDesc);
+
+        String query = "978-3-16-148410-0";
+        URL realBook = GoogleJSONParser.makeGoogleURL(query);
+        InputStream in = GoogleJSONParser.getJSONFromGoogle(realBook);
+        JSONObject json = GoogleJSONParser.getFirstBookFromJSONStream(in);
+        in.close();
+        String description = GoogleJSONParser.getDescriptionFromJSON(json);
+        assertNotNull(description);
+
+        String imageUrl = GoogleJSONParser.getImageURLfromJSON(json);
+        URL goodImgUrl = new URL(imageUrl);
+        URL validUrlNoImg = new URL("https://google.com");
+        Bitmap goodImg = GoogleJSONParser.getImageFromURL(goodImgUrl);
+        Bitmap noImg = GoogleJSONParser.getImageFromURL(validUrlNoImg);
+        assertNotNull(goodImg);
+        assertNull(noImg);
+    }
+*/
     /**
      * Tests that MaterialCoder.encode generates a JSON identical to test.
      * @throws Exception
