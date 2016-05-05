@@ -19,6 +19,7 @@ import android.widget.Spinner;
 public class MainActivity extends AppCompatActivity {
     //for logging
     private static final String TAG = "MainActivity";
+    MaterialCoder matMaker = null;
 
     /**
      * Sets view with activity_main XML file.
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        matMaker = new MaterialCoder(getApplicationContext());
 
         //get search bar from XML & make it final so that event listener can access text
         final EditText searchBar = (EditText) findViewById(R.id.editQuery);
