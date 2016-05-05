@@ -27,7 +27,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/bookCover"
-        android:layout_toRightOf="@+id/bookCover" />
+        android:layout_toRightOf="@+id/bookCover"
+        android:clickable="true" />
 
     <TextView
         android:id="@+id/booktxt_Author"
@@ -38,7 +39,8 @@
         android:layout_alignLeft="@+id/booktxt_Title"
         android:layout_alignStart="@+id/booktxt_Title"
         android:layout_below="@+id/booktxt_Title"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:clickable="true"/>
 
     <CheckBox
         android:id="@+id/checkBox"

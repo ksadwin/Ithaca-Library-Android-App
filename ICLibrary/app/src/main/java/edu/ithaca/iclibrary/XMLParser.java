@@ -167,7 +167,7 @@ public class XMLParser {
                 Log.w(TAG, "HTTP Response code: " + conn.getResponseCode());
             }
         } catch (IOException|XmlPullParserException e) {
-            Log.w(TAG, e.toString());
+            Log.w(TAG, e.getMessage());
         } finally {
             if (conn != null) {
                 conn.disconnect();

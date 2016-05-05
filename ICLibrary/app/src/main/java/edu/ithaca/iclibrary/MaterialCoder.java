@@ -130,7 +130,7 @@ public class MaterialCoder {
      * @param enc
      * @return
      */
-    public Material decode(JSONObject enc){
+    public static Material decode(JSONObject enc){
         Material mat = new Material();
 
         try{
@@ -157,7 +157,7 @@ public class MaterialCoder {
      * @param listEnc
      * @return
      */
-    public List<Material> decode(List<JSONObject> listEnc){
+    public static List<Material> decode(List<JSONObject> listEnc){
         ArrayList<Material> listMat = new ArrayList<Material>();
 
         for(JSONObject json: listEnc){
@@ -174,7 +174,7 @@ public class MaterialCoder {
      * @param filePath
      * @return
      */
-    public List<JSONObject> unpack(String filePath){
+    public static List<JSONObject> unpack(String filePath){
         File favs = null;
         FileInputStream fis = null;
         String jsonStr = null;
