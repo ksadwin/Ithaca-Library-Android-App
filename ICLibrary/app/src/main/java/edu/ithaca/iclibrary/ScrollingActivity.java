@@ -93,19 +93,6 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
 
-    public static Material processCurrBook() {
-        Material cbook = currBook;
-        String author = cbook.getBibText1();
-        String descrptn = cbook.getBibText2();
-        String year = cbook.getBibText3();
-        String isbn = cbook.getIsbn();
-        int status = cbook.getItemStatusCode();
-
-        cbook = new Material("", author, descrptn, year, "", "", 0, 0, status, isbn);
-
-        return cbook;
-    }
-
 
     /**
      * Makes Items in the listView Clickables
@@ -121,7 +108,6 @@ public class ScrollingActivity extends AppCompatActivity {
                 Intent i = new Intent(ScrollingActivity.this, ResultActivity.class);
                 currBook = myBooks.get(position);
                 i.putExtra("position", position);
-                processCurrBook();
                 startActivity(i);
             }
         });
@@ -182,9 +168,13 @@ public class ScrollingActivity extends AppCompatActivity {
             // Title:
             TextView titleText = (TextView) itemView.findViewById(R.id.booktxt_Title);
             titleText.setText(currentBook.getBibText1());
-            if(currentBook.getBibText1() == null){
-                titleText.setText("No Author");
-            }
+            titleText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                    Toast.makeText(ScrollingActivity.this, "TOAST", Toast.LENGTH_LONG).show();
+                }
+            });
 
             // Author:
             TextView authorText = (TextView) itemView.findViewById(R.id.booktxt_Author);
