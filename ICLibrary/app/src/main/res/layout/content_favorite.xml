@@ -26,6 +26,8 @@
         android:text="Book Title shown here"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/bookCover"
+        android:layout_toRightOf="@+id/bookCover"
         android:layout_alignLeft="@+id/booktxt_Author"
         android:layout_alignStart="@+id/booktxt_Author" />
 
@@ -35,6 +37,8 @@
         android:layout_height="wrap_content"
         android:text="Author shown here"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignLeft="@+id/booktxt_Title"
+        android:layout_alignStart="@+id/booktxt_Title"
         android:layout_below="@+id/booktxt_Title"
         android:layout_centerHorizontal="true" />
 
