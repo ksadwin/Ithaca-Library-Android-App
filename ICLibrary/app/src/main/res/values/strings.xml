@@ -9,5 +9,8 @@
         <item>Title</item>
     </string-array>
     <string name="title_activity_result">ResultActivity</string>
+    <string name="title_activity_results_view">ResultsViewActivity</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="title_activity_detail_page">DetailPage</string>
 
 </resources>
