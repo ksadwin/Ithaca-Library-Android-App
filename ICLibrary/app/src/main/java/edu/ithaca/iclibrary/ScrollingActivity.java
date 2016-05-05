@@ -32,6 +32,7 @@ public class ScrollingActivity extends AppCompatActivity {
     private List<Material> myBooks = new ArrayList<>();
     private ArrayAdapter<Material> adapter;
     private DatabaseRequest req = new DatabaseRequest();
+    private MaterialCoder matMaker = new MaterialCoder(getBaseContext());
 
 
     @Override
@@ -63,6 +64,11 @@ public class ScrollingActivity extends AppCompatActivity {
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try{
+                    matMaker.saveMats(myBooks);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
                 Toast.makeText(ScrollingActivity.this, "Current Search Results have been \"Saved\"!!",
                         Toast.LENGTH_LONG).show();
             }

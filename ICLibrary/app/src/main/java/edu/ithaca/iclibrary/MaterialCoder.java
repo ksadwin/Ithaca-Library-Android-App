@@ -1,10 +1,13 @@
 package edu.ithaca.iclibrary;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -196,5 +199,41 @@ public class MaterialCoder {
         }
 
         return listJSON;
+    }
+
+    /**
+     * Removes all instances of mat from the Favorites text file.
+     * @param mat
+     */
+    public void remove(Material mat){
+        JSONObject matJSON = encode(mat);
+        String toRemove = matJSON.toString();
+
+        try{
+            File saveData = new File(getFileDirectoryPath());
+            File tempData = new File(getFileDirectoryPath()+".tmp");
+
+            BufferedReader reader = new BufferedReader(new FileReader(saveData));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempData));
+
+            String currentLine;
+
+            while((currentLine = reader.readLine()) != null) {
+                // trim newline when comparing with lineToRemove
+                //String trimmedLine = currentLine.trim();
+                if(currentLine.equals(toRemove)){
+                    Toast.makeText(con, "Material removed.", Toast.LENGTH_LONG).show();
+                    continue;
+                }
+                writer.write(currentLine + System.getProperty("line.separator"));
+            }
+
+            writer.close();
+            reader.close();
+            boolean successful = tempData.renameTo(saveData);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
