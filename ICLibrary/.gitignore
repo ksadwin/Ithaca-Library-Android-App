@@ -63,6 +63,7 @@ captures/
 .DS_Store
 /build
 /captures
+.idea
 
 # Keystore files
 *.jks

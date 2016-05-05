@@ -5,12 +5,14 @@ import java.util.*;
 
 
 /**
+ * This class will be used to store the Saved Search Results
  * Created by Yaw P. Aidoo on 3/29/2016.
  */
 public class SavedResultsStorage<Item> {
 
     private Item[] arr;         // array of items
-    private int N;            // number of elements on stack
+    private int N;            // number of ele
+    // ments on stack
 
     /**
      * Initializes an empty stack to store references to stored results pages.

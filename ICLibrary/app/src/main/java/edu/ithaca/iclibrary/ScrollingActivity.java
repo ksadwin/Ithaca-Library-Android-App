@@ -1,11 +1,10 @@
 package edu.ithaca.iclibrary;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +26,12 @@ import java.net.URL;
 
 public class ScrollingActivity extends AppCompatActivity {
     private static final String TAG = "ScrollingActivity";
-
+    //public static final String book_ID = "book_ID";
     private List<Material> myBooks = new ArrayList<>();
     private ArrayAdapter<Material> adapter;
     private DatabaseRequest req = new DatabaseRequest();
     private MaterialCoder matMaker = new MaterialCoder(getBaseContext());
+    public static Material currBook = new Material();
 
 
     @Override
@@ -55,12 +54,13 @@ public class ScrollingActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_scroll);
+        registerItemClicks();
 
-        //FIXME: The clicks aren't being registered using this call alone.
-        registerItemClick();
 
         //TODO: work on this to save results on the stack using the savedResultsStorage
+        //Are we still doing this ?
         Button savebutton = (Button) findViewById(R.id.savebutton);
+        assert savebutton != null;
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,9 +73,57 @@ public class ScrollingActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         });
+
+
+        // Favorites button to display favorited books
+        Button favs = (Button) findViewById(R.id.favButton);
+        assert favs != null;
+        favs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ScrollingActivity.this, "This should take you to the \"Favorites\" Page !!",
+                        Toast.LENGTH_LONG).show();
+                Intent resDet = new Intent(ScrollingActivity.this, FavoriteBooks.class);
+                startActivity(resDet);
+
+            }
+        });
     }
 
 
+    public static Material processCurrBook() {
+        Material cbook = currBook;
+        String author = cbook.getBibText1();
+        String descrptn = cbook.getBibText2();
+        String year = cbook.getBibText3();
+        String isbn = cbook.getIsbn();
+        int status = cbook.getItemStatusCode();
+
+        cbook = new Material("", author, descrptn, year, "", "", 0, 0, status, isbn);
+
+        return cbook;
+    }
+
+
+    /**
+     * Makes Items in the listView Clickables
+     */
+    private void registerItemClicks() {
+        ListView list = (ListView) findViewById(R.id.bookListView);
+        assert list != null;
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked,
+                                    int position, long id) {
+
+                Intent i = new Intent(ScrollingActivity.this, ResultActivity.class);
+                currBook = myBooks.get(position);
+                i.putExtra("position", position);
+                processCurrBook();
+                startActivity(i);
+            }
+        });
+    }
 
 
     private void populateListView() {
@@ -123,6 +171,7 @@ public class ScrollingActivity extends AppCompatActivity {
             // Find the Book to work with.
             Material currentBook = myBooks.get(position);
 
+
             // Fill the view with a book cover
             ImageView imageView = (ImageView) itemView.findViewById(R.id.bookCover);
             //FIXME: every book will have a default image of the IC logo
@@ -142,6 +191,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
             return itemView;
         }
+
     }
 
     /**
@@ -179,6 +229,9 @@ public class ScrollingActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Material> materials) {
             myBooks = materials;
             populateListView();
+
+
         }
+
     }
 }

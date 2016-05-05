@@ -1,22 +1,87 @@
 package edu.ithaca.iclibrary;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class ResultActivity extends AppCompatActivity {
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
+import android.os.AsyncTask;
+import android.util.Log;
+
+import java.net.URL;
+
+public class ResultActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Favorite button to display favorited results
+        Button favs = (Button) findViewById(R.id.favButton);
+        favs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ResultActivity.this, "This should take you to the \"Favorites\" Page !!",
+                        Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+        //get curentbook clicked
+        //get info and setcontent on respective layout.
+        //add a favorite button?
+
+        populateResultDetailView();
+
     }
 
-}
+    /**
+     * Populates the detail activity for a selected(touched) results
+     */
+    private void populateResultDetailView(){
+
+            // Find the Book to work with.
+            Material currentBook = ScrollingActivity.currBook;
+
+            // Fill the view with a book cover
+            ImageView imageView = (ImageView)findViewById(R.id.BookImage);
+            //FIXME: every book will have a default image of the IC logo
+            imageView.setImageResource(R.drawable.iclogo);
+
+            // Title:
+            TextView titleText = (TextView)findViewById(R.id.book_Title);
+            titleText.setText(currentBook.getBibText2());
+
+            // Author:
+            TextView authorText = (TextView) findViewById(R.id.book_Author);
+            authorText.setText("" + currentBook.getBibText1());
+
+            // Status:
+            TextView statusText = (TextView) findViewById(R.id.Status);
+            statusText.setText(Integer.toString(currentBook.getItemStatusCode()));
+
+            //ISBN
+            TextView isbn = (TextView)findViewById(R.id.book_ISBN);
+            statusText.setText(currentBook.getIsbn());
+
+        }
+
+    }
+
+
