@@ -163,7 +163,7 @@ public class ScrollingActivity extends AppCompatActivity {
             }
 
             // Find the Book to work with.
-            Material currentBook = myBooks.get(position);
+            final Material currentBook = myBooks.get(position);
 
 
             // Fill the view with a book cover
@@ -174,9 +174,6 @@ public class ScrollingActivity extends AppCompatActivity {
             // Title:
             TextView titleText = (TextView) itemView.findViewById(R.id.booktxt_Title);
             titleText.setText(currentBook.getBibText1());
-            if(currentBook.getBibText1() == null){
-                titleText.setText("No Author");
-            }
 
             // Author:
             TextView authorText = (TextView) itemView.findViewById(R.id.booktxt_Author);
@@ -186,8 +183,26 @@ public class ScrollingActivity extends AppCompatActivity {
             TextView statusText = (TextView) itemView.findViewById(R.id.booktxt_Status);
             statusText.setText(currentBook.translateItemStatusCode());
 
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    makeDetailActivity(currentBook);
+                }
+            });
             return itemView;
         }
+
+    }
+
+    private void makeDetailActivity(Material book) {
+        Intent i = new Intent(this, DetailActivity.class);
+        i.putExtra("bibtext1", book.getBibText1());
+        i.putExtra("bibtext2", book.getBibText2());
+        i.putExtra("status", book.translateItemStatusCode());
+        i.putExtra("isbn", book.getIsbn());
+        startActivity(i);
+    }
 
     }
 
