@@ -38,7 +38,7 @@
                 android:value="edu.ithaca.iclibrary.ScrollingActivity" />
         </activity>
         <activity
-            android:name=".ResultActivity"
+            android:name=".DetailActivity"
             android:label="@string/title_activity_detail_page"
             android:parentActivityName=".ScrollingActivity"
             android:theme="@style/AppTheme.NoActionBar">

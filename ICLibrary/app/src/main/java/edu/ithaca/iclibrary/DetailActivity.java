@@ -18,6 +18,8 @@ public class DetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        matMaker = new MaterialCoder(getApplicationContext());
+
         // Favorite button to display favorited results
         Button favs = (Button) findViewById(R.id.favButton);
         /*
@@ -40,7 +42,7 @@ public class DetailActivity extends AppCompatActivity{
         Button removeMat = (Button) findViewById(R.id.remButton);
         removeMat.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                matMaker.remove(ScrollingActivity.getCurrBook());
+                matMaker.remove(ScrollingActivity.currBook);
                 Toast.makeText(DetailActivity.this,"This item has been removed from Favorites",Toast.LENGTH_LONG);
                 Intent intent = new Intent(DetailActivity.this, ScrollingActivity.class);
                 intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
