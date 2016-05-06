@@ -264,13 +264,12 @@ public class MaterialCoder {
             BufferedReader br = new BufferedReader(isr);
 
             String temp;
-            String rewrite = null;
+            String rewrite = "";
 
             while((temp = br.readLine())!=null){
                 if(temp.equals(toRemove)){
                     continue;
                 }
-                Toast.makeText(con, "Match NOT found.", Toast.LENGTH_LONG).show();
                 rewrite+=temp+"\n";
             }
 
@@ -279,6 +278,7 @@ public class MaterialCoder {
             fis.close();
 
             FileWriter saver = new FileWriter(favs);
+            Log.d("Rewrite",rewrite);
             saver.write(rewrite);
             saver.flush();
             saver.close();
