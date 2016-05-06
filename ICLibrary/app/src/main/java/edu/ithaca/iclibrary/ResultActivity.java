@@ -34,6 +34,7 @@ public class ResultActivity extends AppCompatActivity{
 
         // Favorite button to display favorited results
         Button favs = (Button) findViewById(R.id.favButton);
+        /*
         favs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,19 +43,20 @@ public class ResultActivity extends AppCompatActivity{
 
             }
         });
+        */
 
         //get curentbook clicked
         //get info and setcontent on respective layout.
         //add a favorite button?
 
-        populateResultDetailView();
+        populateResultDetailView(getIntent().getExtras());
 
     }
 
     /**
      * Populates the detail activity for a selected(touched) results
      */
-    private void populateResultDetailView(){
+    private void populateResultDetailView(Bundle extras){
 
             // Find the Book to work with.
             Material currentBook = ScrollingActivity.currBook;
@@ -66,19 +68,19 @@ public class ResultActivity extends AppCompatActivity{
 
             // Title:
             TextView titleText = (TextView)findViewById(R.id.book_Title);
-            titleText.setText(currentBook.getBibText2());
+            titleText.setText(extras.getString("bibtext1"));
 
             // Author:
             TextView authorText = (TextView) findViewById(R.id.book_Author);
-            authorText.setText("" + currentBook.getBibText1());
+            authorText.setText(extras.getString("bibtext2"));
 
             // Status:
             TextView statusText = (TextView) findViewById(R.id.Status);
-            statusText.setText(Integer.toString(currentBook.getItemStatusCode()));
+            statusText.setText(extras.getString("status"));
 
             //ISBN
-            TextView isbn = (TextView)findViewById(R.id.book_ISBN);
-            statusText.setText(currentBook.getIsbn());
+            TextView isbnText = (TextView)findViewById(R.id.book_ISBN);
+            isbnText.setText(extras.getString("isbn"));
 
         }
 

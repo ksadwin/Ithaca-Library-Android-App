@@ -56,7 +56,6 @@ public class ScrollingActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_scroll);
-        registerItemClicks();
 
 
         //TODO: work on this to save results on the stack using the savedResultsStorage
@@ -127,23 +126,10 @@ public class ScrollingActivity extends AppCompatActivity {
         }
     }
 
-    private void registerItemClick() {
-        ListView list = (ListView) findViewById(R.id.bookListView);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked,
-                                    int position, long id) {
-
-                Material clickedBook = myBooks.get(position);
-                String message = "You clicked position " + position
-                        + " Which is Book Title " + clickedBook.getBibText1();
-                Toast.makeText(ScrollingActivity.this, message, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
 
 
     private class MyListAdapter extends ArrayAdapter<Material> {
+
         public MyListAdapter() {
             super(ScrollingActivity.this, R.layout.book_view, myBooks);
         }
@@ -157,7 +143,7 @@ public class ScrollingActivity extends AppCompatActivity {
             }
 
             // Find the Book to work with.
-            Material currentBook = myBooks.get(position);
+            final Material currentBook = myBooks.get(position);
 
 
             // Fill the view with a book cover
@@ -168,13 +154,6 @@ public class ScrollingActivity extends AppCompatActivity {
             // Title:
             TextView titleText = (TextView) itemView.findViewById(R.id.booktxt_Title);
             titleText.setText(currentBook.getBibText1());
-            titleText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO Auto-generated method stub
-                    Toast.makeText(ScrollingActivity.this, "TOAST", Toast.LENGTH_LONG).show();
-                }
-            });
 
             // Author:
             TextView authorText = (TextView) itemView.findViewById(R.id.booktxt_Author);
@@ -184,9 +163,25 @@ public class ScrollingActivity extends AppCompatActivity {
             TextView statusText = (TextView) itemView.findViewById(R.id.booktxt_Status);
             statusText.setText(currentBook.translateItemStatusCode());
 
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    makeDetailActivity(currentBook);
+                }
+            });
             return itemView;
         }
 
+    }
+
+    private void makeDetailActivity(Material book) {
+        Intent i = new Intent(this, ResultActivity.class);
+        i.putExtra("bibtext1", book.getBibText1());
+        i.putExtra("bibtext2", book.getBibText2());
+        i.putExtra("status", book.translateItemStatusCode());
+        i.putExtra("isbn", book.getIsbn());
+        startActivity(i);
     }
 
     /**
