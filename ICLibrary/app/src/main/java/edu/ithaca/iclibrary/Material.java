@@ -46,6 +46,7 @@ public class Material {
     }
 
     public Material() {
+        /*
         this.bibId = "";
         this.bibText1 = "";
         this.bibText2 = "";
@@ -56,6 +57,7 @@ public class Material {
         this.itemCount = -1;
         this.itemStatusCode = -1;
         this.isbn = "";
+        */
     }
 
     public String getBibId() {
