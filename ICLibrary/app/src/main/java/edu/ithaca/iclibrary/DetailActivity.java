@@ -20,19 +20,6 @@ public class DetailActivity extends AppCompatActivity{
 
         matMaker = new MaterialCoder(getApplicationContext());
 
-        // Favorite button to display favorited results
-        Button favs = (Button) findViewById(R.id.favButton);
-        /*
-        favs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(ResultActivity.this, "This should take you to the \"Favorites\" Page !!",
-                        Toast.LENGTH_LONG).show();
-
-            }
-        });
-        */
-
         //get curentbook clicked
         //get info and setcontent on respective layout.
         //add a favorite button?
@@ -42,11 +29,11 @@ public class DetailActivity extends AppCompatActivity{
         Button removeMat = (Button) findViewById(R.id.remButton);
         removeMat.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view){
-                matMaker.remove(ScrollingActivity.currBook);
+                matMaker.remove(ScrollingActivity.getCurrBook());
                 Toast.makeText(DetailActivity.this,"This item has been removed from Favorites",Toast.LENGTH_LONG);
-                Intent intent = new Intent(DetailActivity.this, ScrollingActivity.class);
-                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
-                startActivity(intent);
+                //Intent intent = new Intent(DetailActivity.this, ScrollingActivity.class);
+                //intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                //startActivity(intent);
             }
         });
 
