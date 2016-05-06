@@ -61,7 +61,7 @@ public class FavoriteBooks extends AppCompatActivity {
     }
 
     private void makeDetailActivity(Material book) {
-        Intent i = new Intent(this, DetailActivity.class);
+        Intent i = new Intent(this, FavoriteDetailActivity.class);
         i.putExtra("bibtext1", book.getBibText1());
         i.putExtra("bibtext2", book.getBibText2());
         i.putExtra("status", book.translateItemStatusCode());
@@ -114,15 +114,6 @@ public class FavoriteBooks extends AppCompatActivity {
             return itemView;
 
         }
-    }
-
-    public void makeDetailActivity(Material book) {
-        Intent i = new Intent(this, FavoriteDetailActivity.class);
-        i.putExtra("bibtext1", book.getBibText1());
-        i.putExtra("bibtext2", book.getBibText2());
-        i.putExtra("status", book.translateItemStatusCode());
-        i.putExtra("isbn", book.getIsbn());
-        startActivity(i);
     }
 
 }

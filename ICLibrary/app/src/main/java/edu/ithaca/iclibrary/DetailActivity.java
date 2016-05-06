@@ -20,22 +20,12 @@ public class DetailActivity extends AppCompatActivity{
 
         matMaker = new MaterialCoder(getApplicationContext());
 
+
         //get curentbook clicked
         //get info and setcontent on respective layout.
         //add a favorite button?
 
         populateResultDetailView(getIntent().getExtras());
-
-        Button removeMat = (Button) findViewById(R.id.remButton);
-        removeMat.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view){
-                matMaker.remove(ScrollingActivity.getCurrBook());
-                Toast.makeText(DetailActivity.this,"This item has been removed from Favorites",Toast.LENGTH_LONG);
-                //Intent intent = new Intent(DetailActivity.this, ScrollingActivity.class);
-                //intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
-                //startActivity(intent);
-            }
-        });
 
     }
 

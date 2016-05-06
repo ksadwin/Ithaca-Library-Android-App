@@ -69,6 +69,7 @@
         android:text="Remove"
         android:id="@+id/remButton"
         android:layout_alignTop="@+id/BookImage"
+        android:visibility="gone"
         android:layout_alignParentEnd="true" />
 
 
