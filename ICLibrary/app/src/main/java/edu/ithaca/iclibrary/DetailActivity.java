@@ -24,11 +24,6 @@ public class DetailActivity extends AppCompatActivity{
 
         matMaker = new MaterialCoder(getApplicationContext());
 
-
-        //get curentbook clicked
-        //get info and setcontent on respective layout.
-        //add a favorite button?
-
         try {
             populateResultDetailView(getIntent().getExtras());
         } catch (JSONException e) {
@@ -44,7 +39,7 @@ public class DetailActivity extends AppCompatActivity{
 
             // Find the Book to work with.
             JSONObject json = (JSONObject) new JSONTokener(extras.getString("book")).nextValue();
-            Material currentBook = MaterialCoder.decode(json);
+            final Material currentBook = MaterialCoder.decode(json);
 
             // Fill the view with a book cover
             ImageView imageView = (ImageView)findViewById(R.id.BookImage);
@@ -66,6 +61,21 @@ public class DetailActivity extends AppCompatActivity{
             //ISBN
             TextView isbnText = (TextView)findViewById(R.id.book_ISBN);
             isbnText.setText(currentBook.getIsbn());
+
+            Button save = (Button) findViewById(R.id.oneSaveButton);
+            save.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    try{
+                        matMaker.saveMat(currentBook);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(DetailActivity.this, "This material has been saved to favorites.",
+                            Toast.LENGTH_LONG).show();
+                }
+
+            });
 
         }
 
