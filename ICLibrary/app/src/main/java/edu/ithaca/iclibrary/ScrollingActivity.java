@@ -183,7 +183,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void makeDetailActivity(Material book) {
-        Intent i = new Intent(this, ResultActivity.class);
+        Intent i = new Intent(this, DetailActivity.class);
         i.putExtra("bibtext1", book.getBibText1());
         i.putExtra("bibtext2", book.getBibText2());
         i.putExtra("status", book.translateItemStatusCode());
@@ -224,8 +224,8 @@ public class ScrollingActivity extends AppCompatActivity {
          */
         @Override
         protected void onPostExecute(ArrayList<Material> materials) {
-            ScrollingActivity.myBooks = materials;
-            ScrollingActivity.populateListView();
+            myBooks = materials;
+            populateListView();
         }
 
     }

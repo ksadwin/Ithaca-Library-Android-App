@@ -1,5 +1,6 @@
 package edu.ithaca.iclibrary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -82,7 +83,7 @@ public class FavoriteBooks extends AppCompatActivity {
             }
 
             // Find the Book to work with.
-            Material currentBook = myBooks.get(position);
+            final Material currentBook = myBooks.get(position);
 
             // Fill the view with a book cover
             ImageView imageView = (ImageView) itemView.findViewById(R.id.bookCover);
@@ -101,11 +102,27 @@ public class FavoriteBooks extends AppCompatActivity {
             statusText.setText(currentBook.translateItemStatusCode());
 
             // ISBN:
-            TextView isbn = (TextView) itemView.findViewById(R.id.booktxt_Status);
-            statusText.setText(currentBook.getIsbn());
+            TextView isbnText = (TextView) itemView.findViewById(R.id.booktxt_Status);
+            isbnText.setText(currentBook.getIsbn());
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    makeDetailActivity(currentBook);
+                }
+            });
             return itemView;
+
         }
+    }
+
+    public void makeDetailActivity(Material book) {
+        Intent i = new Intent(this, FavoriteDetailActivity.class);
+        i.putExtra("bibtext1", book.getBibText1());
+        i.putExtra("bibtext2", book.getBibText2());
+        i.putExtra("status", book.translateItemStatusCode());
+        i.putExtra("isbn", book.getIsbn());
+        startActivity(i);
     }
 
 }

@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:longClickable="false"
     android:minHeight="80dp"
-    android:minWidth="80dp">
+    android:minWidth="80dp"
+    android:clickable="true">
 
     <ImageView
         android:id="@+id/bookCover"
@@ -26,8 +27,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/bookCover"
-        android:layout_toRightOf="@+id/bookCover"
-        android:clickable="true" />
+        android:layout_toRightOf="@+id/bookCover" />
 
     <TextView
         android:id="@+id/booktxt_Author"
@@ -38,8 +38,7 @@
         android:layout_alignLeft="@+id/booktxt_Title"
         android:layout_alignStart="@+id/booktxt_Title"
         android:layout_below="@+id/booktxt_Title"
-        android:layout_centerHorizontal="true"
-        android:clickable="true"/>
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:id="@+id/booktxt_Status"
