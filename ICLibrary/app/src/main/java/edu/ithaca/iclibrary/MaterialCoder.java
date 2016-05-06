@@ -8,8 +8,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -224,34 +226,27 @@ public class MaterialCoder {
      * @return
      */
     public static List<JSONObject> unpack(String filePath){
-        File favs = null;
-        FileInputStream fis = null;
-        String jsonStr = null;
+        String jsonStr;
         List listJSON = new ArrayList<JSONObject>();
 
-        try{
-            favs = new File(filePath);
-            fis = new FileInputStream(favs);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        InputStreamReader isr = new InputStreamReader(fis);
-        BufferedReader br = new BufferedReader(isr);
-
-        try{
-            while((jsonStr = br.readLine()) != null){
+        try {
+            File favs = new File(filePath);
+            FileInputStream fis = new FileInputStream(favs);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            while ((jsonStr = br.readLine()) != null) {
                 JSONObject json = (JSONObject) new JSONTokener(jsonStr).nextValue();
                 listJSON.add(json);
-                Log.d("Decode",json.toString());
+                Log.d("Decode", json.toString());
             }
         }catch(Exception e){
-            e.printStackTrace();
-        }
+                e.printStackTrace();
+            }
 
         return listJSON;
     }
 
-    /**
+        /**
      * Removes all instances of mat from the Favorites text file.
      * @param mat
      */
