@@ -55,9 +55,7 @@ public class FavoriteBooks extends AppCompatActivity {
     private void populateBookList() {
         List<JSONObject> jsonFavs = matMaker.unpack(matMaker.getFileDirectoryPath());
         List<Material> favMats = matMaker.decode(jsonFavs);
-        for(Material mat: favMats){
-            myBooks.add(mat);
-        }
+        myBooks = favMats;
     }
 
     private void makeDetailActivity(Material book) {
