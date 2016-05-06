@@ -223,8 +223,6 @@ public class ScrollingActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Material> materials) {
             myBooks = materials;
             populateListView();
-
-
         }
 
     }

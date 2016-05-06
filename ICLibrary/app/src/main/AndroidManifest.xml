@@ -46,6 +46,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.ithaca.iclibrary.ScrollingActivity" />
         </activity>
+        <activity android:name=".FavoriteDetailActivity"
+            android:label="@string/title_activity_detail_page"
+            android:parentActivityName=".FavoriteBooks"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.ithaca.iclibrary.FavoriteBooks" />>
+
+        </activity>
     </application>
 
 </manifest>
