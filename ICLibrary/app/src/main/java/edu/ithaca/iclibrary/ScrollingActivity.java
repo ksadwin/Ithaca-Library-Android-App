@@ -82,8 +82,6 @@ public class ScrollingActivity extends AppCompatActivity {
         favs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ScrollingActivity.this, "This should take you to the \"Favorites\" Page !!",
-                        Toast.LENGTH_LONG).show();
                 Intent resDet = new Intent(ScrollingActivity.this, FavoriteBooks.class);
                 startActivity(resDet);
 

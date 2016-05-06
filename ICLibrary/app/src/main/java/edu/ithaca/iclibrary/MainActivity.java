@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 /**
  * The Activity responsible for collecting user search
@@ -75,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
         favs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "This should take you to the Favorites Page !!",
-                        Toast.LENGTH_LONG).show();
                 Intent resDet = new Intent(MainActivity.this, FavoriteBooks.class);
                 startActivity(resDet);
 
