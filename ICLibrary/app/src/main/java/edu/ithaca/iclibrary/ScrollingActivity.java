@@ -106,7 +106,9 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Custom ArrayAdapter to populate ListView.
+     */
     private class MyListAdapter extends ArrayAdapter<Material> {
 
         public MyListAdapter() {
@@ -153,7 +155,10 @@ public class ScrollingActivity extends AppCompatActivity {
         }
 
     }
-
+    /**
+     * Creates FavoriteDetailActivity for selected Material.
+     * @param book clicked Material
+     */
     private void makeDetailActivity(Material book) {
         Intent i = new Intent(this, DetailActivity.class);
         String json = MaterialCoder.encode(book).toString();

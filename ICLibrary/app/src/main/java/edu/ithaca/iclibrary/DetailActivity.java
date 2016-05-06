@@ -13,7 +13,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-
+/**
+ * Displays DetailActivity for searched Material. Includes a button to add the item to favorites list.
+ */
 public class DetailActivity extends AppCompatActivity{
     MaterialCoder matMaker = null;
 
@@ -39,6 +41,7 @@ public class DetailActivity extends AppCompatActivity{
 
     /**
      * Populates the detail activity for a selected(touched) results
+     * @param extras result of getIntent().getExtras() in onCreate()
      */
     private void populateResultDetailView(Bundle extras) throws JSONException {
 

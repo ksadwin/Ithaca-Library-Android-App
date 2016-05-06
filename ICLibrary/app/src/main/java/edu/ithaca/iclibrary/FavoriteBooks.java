@@ -18,6 +18,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity to display list of books saved as favorites.
+ */
 public class FavoriteBooks extends AppCompatActivity {
     private List<Material> myBooks = new ArrayList<Material>();
     private MaterialCoder matMaker = null;
@@ -52,12 +55,19 @@ public class FavoriteBooks extends AppCompatActivity {
 
     }
 
+    /**
+     * Fills data member myBooks with list of Material objects unpacked from locally stored text file
+     */
     private void populateBookList() {
         List<JSONObject> jsonFavs = matMaker.unpack(matMaker.getFileDirectoryPath());
         List<Material> favMats = matMaker.decode(jsonFavs);
         myBooks = favMats;
     }
 
+    /**
+     * Creates FavoriteDetailActivity for selected Material.
+     * @param book clicked Material
+     */
     private void makeDetailActivity(Material book) {
         Intent i = new Intent(this, FavoriteDetailActivity.class);
         String json = MaterialCoder.encode(book).toString();
@@ -65,6 +75,9 @@ public class FavoriteBooks extends AppCompatActivity {
         startActivity(i);
     }
 
+    /**
+     * Custom ArrayAdapter to populate ListView.
+     */
     private class MyListAdapter extends ArrayAdapter<Material> {
         public MyListAdapter() {
             super(FavoriteBooks.this, R.layout.content_favorite, myBooks);

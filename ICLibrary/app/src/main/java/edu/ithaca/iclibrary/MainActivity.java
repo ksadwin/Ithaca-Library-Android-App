@@ -85,6 +85,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Loads spinner and returns it.
+     * @param id id of Spinner
+     * @return Spinner
+     */
     public Spinner spinnerLoader(int id) {
         Spinner searchType = (Spinner)findViewById(id);
 
