@@ -110,9 +110,6 @@ public class FavoriteBooks extends AppCompatActivity {
             TextView statusText = (TextView) itemView.findViewById(R.id.booktxt_Status);
             statusText.setText(currentBook.translateItemStatusCode());
 
-            // ISBN:
-            TextView isbnText = (TextView) itemView.findViewById(R.id.booktxt_Status);
-            isbnText.setText(currentBook.getIsbn());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

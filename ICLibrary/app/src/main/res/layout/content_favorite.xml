@@ -50,4 +50,6 @@
         android:layout_alignLeft="@+id/booktxt_Author"
         android:layout_alignStart="@+id/booktxt_Author" />
 
+
+
 </RelativeLayout>

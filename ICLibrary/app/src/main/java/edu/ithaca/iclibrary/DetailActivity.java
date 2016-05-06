@@ -65,6 +65,12 @@ public class DetailActivity extends AppCompatActivity{
             TextView isbnText = (TextView)findViewById(R.id.book_ISBN);
             isbnText.setText(currentBook.getIsbn());
 
+            //Location
+            TextView locationText = (TextView) findViewById(R.id.booktxt_Location);
+            locationText.setText(currentBook.getLocationName());
+
+
+
             Button save = (Button) findViewById(R.id.oneSaveButton);
             save.setOnClickListener(new View.OnClickListener(){
                 @Override

@@ -63,6 +63,16 @@
         android:layout_alignLeft="@+id/book_Author"
         android:layout_alignStart="@+id/book_Author" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/booktxt_Location"
+        android:layout_below="@+id/book_ISBN"
+        android:layout_alignLeft="@+id/book_Author"
+        android:layout_alignStart="@+id/book_Author" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
