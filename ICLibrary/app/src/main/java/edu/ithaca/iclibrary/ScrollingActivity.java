@@ -112,7 +112,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
 
-    private void populateListView() {
+    public void populateListView() {
         if (myBooks.size() > 0) {
             //initialize adapter
             adapter = new MyListAdapter();
@@ -239,8 +239,8 @@ public class ScrollingActivity extends AppCompatActivity {
          */
         @Override
         protected void onPostExecute(ArrayList<Material> materials) {
-            myBooks = materials;
-            populateListView();
+            ScrollingActivity.myBooks = materials;
+            ScrollingActivity.populateListView();
         }
 
     }
