@@ -55,7 +55,6 @@ public class ScrollingActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_scroll);
-        registerItemClicks();
 
 
         //TODO: work on this to save results on the stack using the savedResultsStorage
@@ -92,6 +91,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
 
+
     /**
      * Makes Items in the listView Clickables
      */
@@ -125,20 +125,6 @@ public class ScrollingActivity extends AppCompatActivity {
         }
     }
 
-    private void registerItemClick() {
-        ListView list = (ListView) findViewById(R.id.bookListView);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked,
-                                    int position, long id) {
-
-                Material clickedBook = myBooks.get(position);
-                String message = "You clicked position " + position
-                        + " Which is Book Title " + clickedBook.getBibText1();
-                Toast.makeText(ScrollingActivity.this, message, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
 
     /**
      * Returns the selected book of the ScrollingActivity
@@ -150,6 +136,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
     private class MyListAdapter extends ArrayAdapter<Material> {
+
         public MyListAdapter() {
             super(ScrollingActivity.this, R.layout.book_view, myBooks);
         }
@@ -196,14 +183,12 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void makeDetailActivity(Material book) {
-        Intent i = new Intent(this, DetailActivity.class);
+        Intent i = new Intent(this, ResultActivity.class);
         i.putExtra("bibtext1", book.getBibText1());
         i.putExtra("bibtext2", book.getBibText2());
         i.putExtra("status", book.translateItemStatusCode());
         i.putExtra("isbn", book.getIsbn());
         startActivity(i);
-    }
-
     }
 
     /**

@@ -17,12 +17,25 @@ public class DetailActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        matMaker = new MaterialCoder(getApplicationContext());
+
+        // Favorite button to display favorited results
+        Button favs = (Button) findViewById(R.id.favButton);
+        /*
+        favs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ResultActivity.this, "This should take you to the \"Favorites\" Page !!",
+                        Toast.LENGTH_LONG).show();
+
+            }
+        });
+        */
+
         //get curentbook clicked
         //get info and setcontent on respective layout.
         //add a favorite button?
 
-        populateResultDetailView();
+        populateResultDetailView(getIntent().getExtras());
 
         Button removeMat = (Button) findViewById(R.id.remButton);
         removeMat.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +53,7 @@ public class DetailActivity extends AppCompatActivity{
     /**
      * Populates the detail activity for a selected(touched) results
      */
-    private void populateResultDetailView(){
+    private void populateResultDetailView(Bundle extras){
 
             // Find the Book to work with.
             Material currentBook = ScrollingActivity.getCurrBook();
@@ -52,19 +65,19 @@ public class DetailActivity extends AppCompatActivity{
 
             // Title:
             TextView titleText = (TextView)findViewById(R.id.book_Title);
-            titleText.setText(currentBook.getBibText2());
+            titleText.setText(extras.getString("bibtext1"));
 
             // Author:
             TextView authorText = (TextView) findViewById(R.id.book_Author);
-            authorText.setText("" + currentBook.getBibText1());
+            authorText.setText(extras.getString("bibtext2"));
 
             // Status:
             TextView statusText = (TextView) findViewById(R.id.Status);
-            statusText.setText(Integer.toString(currentBook.getItemStatusCode()));
+            statusText.setText(extras.getString("status"));
 
             //ISBN
-            TextView isbn = (TextView)findViewById(R.id.book_ISBN);
-            statusText.setText(currentBook.getIsbn());
+            TextView isbnText = (TextView)findViewById(R.id.book_ISBN);
+            isbnText.setText(extras.getString("isbn"));
 
         }
 
