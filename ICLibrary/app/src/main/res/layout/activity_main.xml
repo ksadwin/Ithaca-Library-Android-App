@@ -41,5 +41,13 @@
         android:layout_below="@+id/editQuery"
         android:layout_toRightOf="@id/searchButton" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Favorites"
+        android:id="@+id/favbutton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
 
 </RelativeLayout>

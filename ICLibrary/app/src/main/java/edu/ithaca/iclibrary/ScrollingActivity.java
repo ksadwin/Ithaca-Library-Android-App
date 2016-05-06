@@ -1,6 +1,7 @@
 package edu.ithaca.iclibrary;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -30,7 +31,7 @@ public class ScrollingActivity extends AppCompatActivity {
     private ArrayAdapter<Material> adapter;
     private DatabaseRequest req = new DatabaseRequest();
     private MaterialCoder matMaker = null;
-    private static Material currBook = new Material();
+    public static Material currBook = new Material();
 
 
     @Override
@@ -112,7 +113,7 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
 
-    public void populateListView() {
+    private void populateListView() {
         if (myBooks.size() > 0) {
             //initialize adapter
             adapter = new MyListAdapter();
@@ -125,14 +126,10 @@ public class ScrollingActivity extends AppCompatActivity {
         }
     }
 
-
-    /**
-     * Returns the selected book of the ScrollingActivity
-     * @return
-     */
     public static Material getCurrBook(){
         return currBook;
     }
+
 
 
     private class MyListAdapter extends ArrayAdapter<Material> {

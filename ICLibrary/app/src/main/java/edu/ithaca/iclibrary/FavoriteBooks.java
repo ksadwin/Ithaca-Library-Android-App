@@ -32,8 +32,23 @@ public class FavoriteBooks extends AppCompatActivity {
         matMaker = new MaterialCoder(getApplicationContext());
 
         populateBookList();
-        populateListView();
-        registerItemClick();
+
+        //Build adapter
+        MyListAdapter adapter = new MyListAdapter();
+
+        //configure the list view
+        ListView list = (ListView) findViewById(R.id.favListView);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(FavoriteBooks.this , DetailActivity.class);
+                Material toBePassed = myBooks.get(i);
+                String itemData = MaterialCoder.encode(toBePassed).toString();
+                intent.putExtra("Detail",itemData);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -45,28 +60,13 @@ public class FavoriteBooks extends AppCompatActivity {
         }
     }
 
-    private void populateListView() {
-        //Build adapter
-        ArrayAdapter<Material> adapter = new MyListAdapter();
-
-        //configure the list view
-        ListView list = (ListView) findViewById(R.id.favListView);
-        list.setAdapter(adapter);
-    }
-
-    private void registerItemClick() {
-        ListView list = (ListView) findViewById(R.id.favListView);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked,
-                                    int position, long id) {
-
-                Material clickedBook = myBooks.get(position);
-//                String message = "You clicked position " + position
-//                        + " Which is Book Tittle " + clickedBook.getBibText1();
-                //Toast.makeText(FavoriteBooks.this, message, Toast.LENGTH_LONG).show();
-            }
-        });
+    private void makeDetailActivity(Material book) {
+        Intent i = new Intent(this, DetailActivity.class);
+        i.putExtra("bibtext1", book.getBibText1());
+        i.putExtra("bibtext2", book.getBibText2());
+        i.putExtra("status", book.translateItemStatusCode());
+        i.putExtra("isbn", book.getIsbn());
+        startActivity(i);
     }
 
     private class MyListAdapter extends ArrayAdapter<Material> {
