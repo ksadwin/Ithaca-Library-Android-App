@@ -4,50 +4,36 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 
-import android.os.AsyncTask;
-import android.util.Log;
+public class DetailActivity extends AppCompatActivity{
+    MaterialCoder matMaker = null;
 
-import java.net.URL;
-
-public class ResultActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-
-        // Favorite button to display favorited results
-        Button favs = (Button) findViewById(R.id.favButton);
-        favs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(ResultActivity.this, "This should take you to the \"Favorites\" Page !!",
-                        Toast.LENGTH_LONG).show();
-
-            }
-        });
-
+        matMaker = new MaterialCoder(getApplicationContext());
         //get curentbook clicked
         //get info and setcontent on respective layout.
         //add a favorite button?
 
         populateResultDetailView();
+
+        Button removeMat = (Button) findViewById(R.id.remButton);
+        removeMat.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view){
+                matMaker.remove(ScrollingActivity.getCurrBook());
+                Toast.makeText(DetailActivity.this,"This item has been removed from Favorites",Toast.LENGTH_LONG);
+                Intent intent = new Intent(DetailActivity.this, ScrollingActivity.class);
+                intent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -57,7 +43,7 @@ public class ResultActivity extends AppCompatActivity{
     private void populateResultDetailView(){
 
             // Find the Book to work with.
-            Material currentBook = ScrollingActivity.currBook;
+            Material currentBook = ScrollingActivity.getCurrBook();
 
             // Fill the view with a book cover
             ImageView imageView = (ImageView)findViewById(R.id.BookImage);

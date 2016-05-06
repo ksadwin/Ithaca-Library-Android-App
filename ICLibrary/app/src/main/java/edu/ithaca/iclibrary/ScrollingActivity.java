@@ -1,7 +1,6 @@
 package edu.ithaca.iclibrary;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,7 +30,7 @@ public class ScrollingActivity extends AppCompatActivity {
     private ArrayAdapter<Material> adapter;
     private DatabaseRequest req = new DatabaseRequest();
     private MaterialCoder matMaker = null;
-    public static Material currBook = new Material();
+    private static Material currBook = new Material();
 
 
     @Override
@@ -93,20 +92,6 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
 
-    public static Material processCurrBook() {
-        Material cbook = currBook;
-        String author = cbook.getBibText1();
-        String descrptn = cbook.getBibText2();
-        String year = cbook.getBibText3();
-        String isbn = cbook.getIsbn();
-        int status = cbook.getItemStatusCode();
-
-        cbook = new Material("", author, descrptn, year, "", "", 0, 0, status, isbn);
-
-        return cbook;
-    }
-
-
     /**
      * Makes Items in the listView Clickables
      */
@@ -118,10 +103,9 @@ public class ScrollingActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View viewClicked,
                                     int position, long id) {
 
-                Intent i = new Intent(ScrollingActivity.this, ResultActivity.class);
+                Intent i = new Intent(ScrollingActivity.this, DetailActivity.class);
                 currBook = myBooks.get(position);
                 i.putExtra("position", position);
-                processCurrBook();
                 startActivity(i);
             }
         });
@@ -154,6 +138,14 @@ public class ScrollingActivity extends AppCompatActivity {
                 Toast.makeText(ScrollingActivity.this, message, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    /**
+     * Returns the selected book of the ScrollingActivity
+     * @return
+     */
+    public static Material getCurrBook(){
+        return currBook;
     }
 
 
@@ -234,8 +226,6 @@ public class ScrollingActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Material> materials) {
             myBooks = materials;
             populateListView();
-
-
         }
 
     }

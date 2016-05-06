@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="edu.ithaca.iclibrary.ResultsViewActivity"
+    tools:context=".DetailActivity"
     tools:showIn="@layout/activity_result">
 
 
@@ -63,15 +63,13 @@
         android:layout_alignLeft="@+id/book_Author"
         android:layout_alignStart="@+id/book_Author" />
 
-    <CheckBox
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Favorite "
-        android:id="@+id/button_Favorite"
-        android:layout_below="@+id/book_ISBN"
-        android:layout_alignLeft="@+id/book_ISBN"
-        android:layout_alignStart="@+id/book_ISBN"
-        android:checked="false" />
+        android:text="Remove"
+        android:id="@+id/remButton"
+        android:layout_below="@+id/book_Title"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>
