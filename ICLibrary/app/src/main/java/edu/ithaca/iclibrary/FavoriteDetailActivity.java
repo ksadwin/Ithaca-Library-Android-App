@@ -40,6 +40,9 @@ public class FavoriteDetailActivity extends DetailActivity {
                 }
             });
 
+            Button save = (Button) findViewById(R.id.oneSaveButton);
+            save.setVisibility(View.INVISIBLE);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
