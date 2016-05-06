@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,12 +66,12 @@ public class DetailActivity extends AppCompatActivity{
             isbnText.setText(currentBook.getIsbn());
 
             Button save = (Button) findViewById(R.id.oneSaveButton);
-            save.setOnClickListener(new View.OnClickListener(){
+            save.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view){
-                    try{
+                public void onClick(View view) {
+                    try {
                         matMaker.saveMat(currentBook);
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     Toast.makeText(DetailActivity.this, "This material has been saved to favorites.",
