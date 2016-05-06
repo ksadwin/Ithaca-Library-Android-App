@@ -46,6 +46,7 @@ public class Material {
     }
 
     public Material() {
+        /*
         this.bibId = "";
         this.bibText1 = "";
         this.bibText2 = "";
@@ -56,6 +57,7 @@ public class Material {
         this.itemCount = -1;
         this.itemStatusCode = -1;
         this.isbn = "";
+        */
     }
 
     public String getBibId() {
@@ -126,6 +128,10 @@ public class Material {
         return itemStatusCode;
     }
 
+    /**
+     * Return a string interpretation of the item status code.
+     * @return Available, Checked out, or N/A
+     */
     public String translateItemStatusCode() {
         if (itemStatusCode == 1) {
             return "Available";

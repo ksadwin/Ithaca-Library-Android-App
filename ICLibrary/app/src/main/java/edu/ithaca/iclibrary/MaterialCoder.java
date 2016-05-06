@@ -25,7 +25,7 @@ import org.json.JSONTokener;
  * Created by Joseph on 4/26/2016.
  */
 public class MaterialCoder {
-
+    private static final String TAG = "MaterialCoder";
     private static String appFolder = "ICLibrary";
     private static String favFileName = "Favorites.txt";
     private static Context con;
@@ -239,6 +239,9 @@ public class MaterialCoder {
                 listJSON.add(json);
                 Log.d("Decode", json.toString());
             }
+            br.close();
+            isr.close();
+            fis.close();
         }catch(Exception e){
                 e.printStackTrace();
             }
@@ -253,29 +256,36 @@ public class MaterialCoder {
     public void remove(Material mat){
         JSONObject matJSON = encode(mat);
         String toRemove = matJSON.toString();
+        Log.d(TAG, toRemove);
 
         try{
-            File saveData = new File(getFileDirectoryPath());
-            File tempData = new File(getFileDirectoryPath()+".tmp");
+            File favs = new File(getFileDirectoryPath());
+            FileInputStream fis = new FileInputStream(favs);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
 
-            BufferedReader reader = new BufferedReader(new FileReader(saveData));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(tempData));
+            String temp;
+            String rewrite = "";
 
-            String currentLine;
-
-            while((currentLine = reader.readLine()) != null) {
-                // trim newline when comparing with lineToRemove
-                //String trimmedLine = currentLine.trim();
-                if(currentLine.equals(toRemove)){
-                    Toast.makeText(con, "Material removed.", Toast.LENGTH_LONG).show();
+            while((temp = br.readLine())!=null){
+                Log.d(TAG, temp);
+                if(temp.equals(toRemove)){
                     continue;
                 }
-                writer.write(currentLine + System.getProperty("line.separator"));
+                rewrite+=temp+"\n";
             }
 
-            writer.close();
-            reader.close();
-            boolean successful = tempData.renameTo(saveData);
+            Log.d(TAG, rewrite);
+
+            br.close();
+            isr.close();
+            fis.close();
+
+            FileWriter saver = new FileWriter(favs);
+            Log.d("Rewrite",rewrite);
+            saver.write(rewrite);
+            saver.flush();
+            saver.close();
 
         }catch (Exception e){
             e.printStackTrace();

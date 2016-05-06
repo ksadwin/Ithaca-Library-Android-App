@@ -8,7 +8,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
+/**
+ * Displays DetailActivity for searched Material. Includes a button to add the item to favorites list.
+ */
 public class DetailActivity extends AppCompatActivity{
     MaterialCoder matMaker = null;
 
@@ -19,22 +25,23 @@ public class DetailActivity extends AppCompatActivity{
 
         matMaker = new MaterialCoder(getApplicationContext());
 
-
-        //get curentbook clicked
-        //get info and setcontent on respective layout.
-        //add a favorite button?
-
-        populateResultDetailView(getIntent().getExtras());
+        try {
+            populateResultDetailView(getIntent().getExtras());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
     /**
      * Populates the detail activity for a selected(touched) results
+     * @param extras result of getIntent().getExtras() in onCreate()
      */
-    private void populateResultDetailView(Bundle extras){
+    private void populateResultDetailView(Bundle extras) throws JSONException {
 
             // Find the Book to work with.
-            Material currentBook = ScrollingActivity.getCurrBook();
+            JSONObject json = (JSONObject) new JSONTokener(extras.getString("book")).nextValue();
+            final Material currentBook = MaterialCoder.decode(json);
 
             // Fill the view with a book cover
             ImageView imageView = (ImageView)findViewById(R.id.BookImage);
@@ -43,19 +50,34 @@ public class DetailActivity extends AppCompatActivity{
 
             // Title:
             TextView titleText = (TextView)findViewById(R.id.book_Title);
-            titleText.setText(extras.getString("bibtext1"));
+            titleText.setText(currentBook.getBibText1());
 
             // Author:
             TextView authorText = (TextView) findViewById(R.id.book_Author);
-            authorText.setText(extras.getString("bibtext2"));
+            authorText.setText(currentBook.getBibText2());
 
             // Status:
             TextView statusText = (TextView) findViewById(R.id.Status);
-            statusText.setText(extras.getString("status"));
+            statusText.setText(currentBook.translateItemStatusCode());
 
             //ISBN
             TextView isbnText = (TextView)findViewById(R.id.book_ISBN);
-            isbnText.setText(extras.getString("isbn"));
+            isbnText.setText(currentBook.getIsbn());
+
+            Button save = (Button) findViewById(R.id.oneSaveButton);
+            save.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    try{
+                        matMaker.saveMat(currentBook);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(DetailActivity.this, "This material has been saved to favorites.",
+                            Toast.LENGTH_LONG).show();
+                }
+
+            });
 
         }
 

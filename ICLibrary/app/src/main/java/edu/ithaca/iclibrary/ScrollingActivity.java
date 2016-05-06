@@ -22,6 +22,8 @@ import java.util.List;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONObject;
+
 import java.net.URL;
 
 public class ScrollingActivity extends AppCompatActivity {
@@ -31,7 +33,6 @@ public class ScrollingActivity extends AppCompatActivity {
     private ArrayAdapter<Material> adapter;
     private DatabaseRequest req = new DatabaseRequest();
     private MaterialCoder matMaker = null;
-    public static Material currBook = new Material();
 
 
     @Override
@@ -91,26 +92,6 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
 
-    /**
-     * Makes Items in the listView Clickables
-     */
-    private void registerItemClicks() {
-        ListView list = (ListView) findViewById(R.id.bookListView);
-        assert list != null;
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked,
-                                    int position, long id) {
-
-                Intent i = new Intent(ScrollingActivity.this, DetailActivity.class);
-                currBook = myBooks.get(position);
-                i.putExtra("position", position);
-                startActivity(i);
-            }
-        });
-    }
-
-
     private void populateListView() {
         if (myBooks.size() > 0) {
             //initialize adapter
@@ -124,12 +105,10 @@ public class ScrollingActivity extends AppCompatActivity {
         }
     }
 
-    public static Material getCurrBook(){
-        return currBook;
-    }
 
-
-
+    /**
+     * Custom ArrayAdapter to populate ListView.
+     */
     private class MyListAdapter extends ArrayAdapter<Material> {
 
         public MyListAdapter() {
@@ -176,13 +155,14 @@ public class ScrollingActivity extends AppCompatActivity {
         }
 
     }
-
+    /**
+     * Creates FavoriteDetailActivity for selected Material.
+     * @param book clicked Material
+     */
     private void makeDetailActivity(Material book) {
         Intent i = new Intent(this, DetailActivity.class);
-        i.putExtra("bibtext1", book.getBibText1());
-        i.putExtra("bibtext2", book.getBibText2());
-        i.putExtra("status", book.translateItemStatusCode());
-        i.putExtra("isbn", book.getIsbn());
+        String json = MaterialCoder.encode(book).toString();
+        i.putExtra("book", json);
         startActivity(i);
     }
 
