@@ -25,7 +25,7 @@ import org.json.JSONTokener;
  * Created by Joseph on 4/26/2016.
  */
 public class MaterialCoder {
-
+    private static final String TAG = "MaterialCoder";
     private static String appFolder = "ICLibrary";
     private static String favFileName = "Favorites.txt";
     private static Context con;
@@ -256,6 +256,7 @@ public class MaterialCoder {
     public void remove(Material mat){
         JSONObject matJSON = encode(mat);
         String toRemove = matJSON.toString();
+        Log.d(TAG, toRemove);
 
         try{
             File favs = new File(getFileDirectoryPath());
@@ -264,15 +265,17 @@ public class MaterialCoder {
             BufferedReader br = new BufferedReader(isr);
 
             String temp;
-            String rewrite = null;
+            String rewrite = "";
 
             while((temp = br.readLine())!=null){
+                Log.d(TAG, temp);
                 if(temp.equals(toRemove)){
                     continue;
                 }
-                Toast.makeText(con, "Match NOT found.", Toast.LENGTH_LONG).show();
                 rewrite+=temp+"\n";
             }
+
+            Log.d(TAG, rewrite);
 
             br.close();
             isr.close();
