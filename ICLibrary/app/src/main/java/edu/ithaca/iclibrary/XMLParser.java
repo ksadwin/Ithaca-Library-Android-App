@@ -21,7 +21,8 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Class that makes API requests of the IC Library asynchronously.
+ * A set of functions to format URLs, make HTTP requests, and interpret the XML response
+ * from the IC Library to make Material objects.
  * @author KSADWIN
  * 3/27/2016
  */

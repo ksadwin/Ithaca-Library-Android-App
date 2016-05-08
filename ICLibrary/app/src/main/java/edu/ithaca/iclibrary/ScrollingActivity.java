@@ -26,6 +26,10 @@ import org.json.JSONObject;
 
 import java.net.URL;
 
+/**
+ * Displays the first 25 results of a search query to the IC Library. Queries are fed from
+ * MainActivity. Results are displayed as clickable units in a ListView.
+ */
 public class ScrollingActivity extends AppCompatActivity {
     private static final String TAG = "ScrollingActivity";
     //public static final String book_ID = "book_ID";

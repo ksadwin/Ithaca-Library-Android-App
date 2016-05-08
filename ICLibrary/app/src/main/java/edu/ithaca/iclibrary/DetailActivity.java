@@ -14,7 +14,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 /**
- * Displays DetailActivity for searched Material. Includes a button to add the item to favorites list.
+ * Contains and presents data for a single item from the library (see Material class). Allows the
+ * Material to be saved to Favorites with a MaterialCoder.
  */
 public class DetailActivity extends AppCompatActivity{
     MaterialCoder matMaker = null;

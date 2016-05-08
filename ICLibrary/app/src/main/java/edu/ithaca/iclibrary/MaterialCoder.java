@@ -23,6 +23,9 @@ import org.json.JSONTokener;
 
 /**
  * Created by Joseph on 4/26/2016.
+ * Processes the Material object for the purposes of saving them to Favorites. Saves lists of
+ * Materials to a .txt file on the device's internal storage with JSON strings. Unpacks the
+ * save file and converts it to a list of Materials.
  */
 public class MaterialCoder {
     private static final String TAG = "MaterialCoder";

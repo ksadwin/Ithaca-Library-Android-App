@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Activity to display list of books saved as favorites.
+ * Activity to display list of books saved to Favorites. Allows user to view individual Materials
+ * in FavoriteDetailActivity.
  */
 public class FavoriteBooks extends AppCompatActivity {
     private List<Material> myBooks = new ArrayList<Material>();
@@ -76,7 +77,7 @@ public class FavoriteBooks extends AppCompatActivity {
     }
 
     /**
-     * Custom ArrayAdapter to populate ListView.
+     * Custom ArrayAdapter to populate ScrollingActivity.
      */
     private class MyListAdapter extends ArrayAdapter<Material> {
         public MyListAdapter() {

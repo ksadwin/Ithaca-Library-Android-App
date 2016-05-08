@@ -13,9 +13,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 /**
- * The Activity responsible for collecting user search
- * queries. Will also be the gateway to the barcode scanner
- * functionality.
+ * The opening activity of the app. Captures the user's search queries and sends them to
+ * ScrollingActivity. The hierarchical parent of all other Activities.
  */
 public class MainActivity extends AppCompatActivity {
     //for logging
