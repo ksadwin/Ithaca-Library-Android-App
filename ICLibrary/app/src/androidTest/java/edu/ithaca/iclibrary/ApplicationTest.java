@@ -171,7 +171,7 @@ public class ApplicationTest extends InstrumentationTestCase {
      * Tests that MaterialCoder.encode generates a JSON identical to test.
      * @throws Exception
      */
-    @Test
+   /* @Test
     public void encodeReturnsJSONObject() throws Exception{
 
         JSONObject obj = matMaker.encode(mockMat);
@@ -226,5 +226,5 @@ public class ApplicationTest extends InstrumentationTestCase {
         for(JSONObject j: jsonList){
             onView(withId(R.id.editQuery)).perform(click(),ViewActions.typeText(j.toString()));
         }
-    }
+    }*/
 }
