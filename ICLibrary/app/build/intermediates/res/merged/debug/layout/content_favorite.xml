@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:longClickable="false"
+    android:minHeight="80dp"
+    android:minWidth="80dp"
+    android:clickable="true">
+
+    <ImageView
+        android:id="@+id/bookCover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/booktxt_Title"
+        android:adjustViewBounds="true"
+        android:maxHeight="60dp"
+        android:maxWidth="60dp" />
+
+    <TextView
+        android:id="@+id/booktxt_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:text="Book Title shown here"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/bookCover"
+        android:layout_toRightOf="@+id/bookCover" />
+
+    <TextView
+        android:id="@+id/booktxt_Author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Author shown here"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignLeft="@+id/booktxt_Title"
+        android:layout_alignStart="@+id/booktxt_Title"
+        android:layout_below="@+id/booktxt_Title"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/booktxt_Status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/booktxt_Author"
+        android:layout_alignLeft="@+id/booktxt_Author"
+        android:layout_alignStart="@+id/booktxt_Author" />
+
+
+
+</RelativeLayout>

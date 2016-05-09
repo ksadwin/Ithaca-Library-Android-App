@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
+        <dex dex="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.2.1_7fab855c19b42f1c0ab158b556e73e19810d4321.jar" />
+    </item>
+    <item
+        jar="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\libs\internal_impl-23.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
+        <dex dex="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\pre-dexed\debug\internal_impl-23.2.1_45e3c0227e76198df3358eb2db9adaa797e59bf0.jar" />
+    </item>
+    <item
+        jar="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
+        <dex dex="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.2.1_2bd1275647a580d8f78f8e3702fb81df80f6049f.jar" />
+    </item>
+    <item
+        jar="H:\Android\SDK\extras\android\m2repository\com\android\support\support-annotations\23.2.1\support-annotations-23.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
+        <dex dex="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\pre-dexed\debug\support-annotations-23.2.1_645fbfd45f36f7463b676e80d0cac781f41a0937.jar" />
+    </item>
+    <item
+        jar="H:\Ithaca-Library-Android-App\ICLibrary\app\libs\jsonassert-1.2.3.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="2cb01fdff70caf688561d877cea55451ab164527">
+        <dex dex="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\pre-dexed\debug\jsonassert-1.2.3_5273fb4fdbc508bc702062f40392df5473b93856.jar" />
+    </item>
+    <item
+        jar="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
+        <dex dex="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.2.1_809ef4b58c7d9aebf76156d3ecb1663505d84b76.jar" />
+    </item>
+    <item
+        jar="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\exploded-aar\com.android.support\design\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\pre-dexed\debug\com.android.support-design-23.2.1_d28d176c2586e60b705052df5349abc13e31c838.jar" />
+    </item>
+    <item
+        jar="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
+        <dex dex="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.2.1_39478c5bd3a6e9918ca56952be3c85c977597b14.jar" />
+    </item>
+    <item
+        jar="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="673d77a5bbddd766037f088e775df525c46407f0">
+        <dex dex="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.2.1_f72fb615b154c1eadb40e518189a51aa21f50daa.jar" />
+    </item>
+    <item
+        jar="H:\Ithaca-Library-Android-App\ICLibrary\app\libs\json-simple-1.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="5d6f9b6a9ddca2a28c0216cc44efb2e20d9c23b5">
+        <dex dex="H:\Ithaca-Library-Android-App\ICLibrary\app\build\intermediates\pre-dexed\debug\json-simple-1.1.1_37da5a5cedda8eafed4e12d959ece453ccce7ccf.jar" />
+    </item>
+
+</items>
